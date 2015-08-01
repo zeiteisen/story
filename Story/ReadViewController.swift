@@ -43,6 +43,7 @@ class ReadViewController: UIViewController {
         }
         
         likeButton.enabled = false
+        likeButton.backgroundColor = UIColor.getColorForTouchableArea()
         if !likeButton.hidden {
             let query = PFQuery(className: "Node")
             query.whereKey("objectId", equalTo: node.objectId!)

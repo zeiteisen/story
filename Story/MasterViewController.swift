@@ -1,6 +1,12 @@
 import UIKit
 import Parse
 
+enum UserState {
+    case Anonymous
+    case LoggedIn
+    case LoggedOut
+}
+
 class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var objects = [PFObject]()
@@ -10,50 +16,58 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var rankLabel: UILabel!
     @IBOutlet weak var ranksButton: SmartButton!
     @IBOutlet weak var loginButton: SmartButton!
+    var refreshControl: UIRefreshControl!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-//        self.navigationItem.leftBarButtonItem = self.editButtonItem()
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
         tableView.tableFooterView = UIView(frame: CGRectZero)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
+
         loginButton.setTitle(NSLocalizedString("wait", comment: ""), forState: .Normal)
         title = NSLocalizedString("start_title", comment: "")
-        if (PFUser.currentUser()?.isAuthenticated() != nil) {
-            PFAnonymousUtils.logInWithBlock {
-                (user: PFUser?, error: NSError?) -> Void in
-                if error != nil || user == nil {
-                    println("Anonymous login failed.")
-                } else {
-                    println("Anonymous user logged in.")
-                    self.updateContent()
-                }
-            }
-            if PFAnonymousUtils.isLinkedWithUser(PFUser.currentUser()) {
-                self.loginButton.setTitle(NSLocalizedString("logout", comment: ""), forState: .Normal)
-            } else {
-                self.loginButton.setTitle(NSLocalizedString("login", comment: ""), forState: .Normal)
-            }
+        if (PFUser.currentUser()?.objectId == nil) {
+            createAnonymousUserAndUpdate()
         }
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "updateContent", forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshControl)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if (PFUser.currentUser()?.username != nil) {
-            updateContent()
-        }
+        updateContent()
+    }
+    
+    func shouldLogout() -> Bool {
+        return PFUser.currentUser()!.isAuthenticated() && !PFAnonymousUtils.isLinkedWithUser(PFUser.currentUser()!)
+    }
+    
+    func createAnonymousUserAndUpdate() {
+        PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+            if let error = error {
+                
+            } else {
+                self.updateContent()
+            }
+        })
     }
     
     func updateContent() {
+        if shouldLogout() {
+            loginButton.setTitle(NSLocalizedString("logout", comment: ""), forState: .Normal)
+        } else {
+            loginButton.setTitle(NSLocalizedString("signup", comment: ""), forState: .Normal)
+        }
         let query = PFQuery(className: "Node")
         query.addDescendingOrder("updatedAt")
         query.whereKeyDoesNotExist("root")
         query.includeKey("owner")
         query.whereKey("lang", equalTo: NSLocale.preferredLanguages()[0])
         query.findObjectsInBackgroundWithBlock { (results: [AnyObject]?, error: NSError?) -> Void in
+            self.refreshControl.endRefreshing()
             if let error = error {
                 println("error: \(error)")
             } else if let nodes = results as? [PFObject] {
@@ -65,13 +79,18 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if let error = error {
                 println("error: \(error)")
             } else if let user = object as? PFUser {
-                let username = user["username"] as! String
-                self.usernameLabel.text = NSLocalizedString("your_name", comment: "") + " \(username)"
+                var username = NSLocalizedString("anonymous", comment: "")
+                if let remoteUsername = user["username"] as? String {
+                    if !PFAnonymousUtils.isLinkedWithUser(user) {
+                        username = remoteUsername
+                    }
+                }
+                self.usernameLabel.text = NSLocalizedString("your_name", comment: "") + ": \(username)"
                 var likes = 0
                 if let remoteLikes = user["likes"] as? NSNumber {
                     likes = remoteLikes.integerValue
                 }
-                self.rankLabel.text = NSLocalizedString("your_rank", comment: "") + " \(likes)"
+                self.rankLabel.text = NSLocalizedString("your_rank", comment: "") + ": \(likes)"
             }
         })
 
@@ -86,9 +105,21 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func ranksTouched(sender: AnyObject) {
     }
     
-    @IBAction func loginTouched(sender: AnyObject) {
-        let signupViewController = storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
-        presentViewController(signupViewController, animated: true, completion: nil)
+    @IBAction func loginTouched(sender: UIButton) {
+        if shouldLogout() {
+            sender.enabled = false
+            PFUser.logOutInBackgroundWithBlock({ (error: NSError?) -> Void in
+                if let error = error {
+                    
+                } else {
+                    sender.enabled = true
+                    self.createAnonymousUserAndUpdate()
+                }
+            })
+        } else {
+            let signupViewController = storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+            presentViewController(signupViewController, animated: true, completion: nil)
+        }
     }
 
     // MARK: - Segues

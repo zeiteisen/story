@@ -87,25 +87,36 @@
                                         </state>
                                         <connections>
                                             <action selector="closeTouched:" destination="FLi-xh-WhN" eventType="touchUpInside" id="dfN-LJ-yzT"/>
-                                            <action selector="signupTouched:" destination="FLi-xh-WhN" eventType="touchUpInside" id="nOU-Zw-eRc"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rje-Gj-D6I">
+                                        <rect key="frame" x="20" y="200" width="97" height="30"/>
+                                        <state key="normal" title="Login">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loginTouched:" destination="FLi-xh-WhN" eventType="touchUpInside" id="QUf-O9-B9V"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Mq2-XE-xAi" firstAttribute="leading" secondItem="Bq4-JO-7md" secondAttribute="leading" id="387-Yy-b9S"/>
+                                    <constraint firstItem="Rje-Gj-D6I" firstAttribute="top" secondItem="UHH-rf-V5x" secondAttribute="bottom" constant="8" symbolic="YES" id="5yI-sS-Mza"/>
                                     <constraint firstItem="UHH-rf-V5x" firstAttribute="trailing" secondItem="Mq2-XE-xAi" secondAttribute="trailing" id="74e-Jf-uU3"/>
                                     <constraint firstItem="UHH-rf-V5x" firstAttribute="top" secondItem="Mq2-XE-xAi" secondAttribute="bottom" constant="8" symbolic="YES" id="95X-P0-MU7"/>
                                     <constraint firstItem="UHH-rf-V5x" firstAttribute="leading" secondItem="Mq2-XE-xAi" secondAttribute="leading" id="DCe-Kw-IOb"/>
                                     <constraint firstAttribute="trailing" secondItem="ZUL-6l-j6G" secondAttribute="trailing" constant="483" id="Dxa-Ra-as8"/>
                                     <constraint firstItem="QQg-Ch-J6F" firstAttribute="leading" secondItem="Bq4-JO-7md" secondAttribute="leading" id="GFr-ND-k0z"/>
                                     <constraint firstItem="QQg-Ch-J6F" firstAttribute="top" secondItem="ZUL-6l-j6G" secondAttribute="bottom" constant="10" id="Guv-BX-wBN"/>
+                                    <constraint firstItem="Rje-Gj-D6I" firstAttribute="leading" secondItem="UHH-rf-V5x" secondAttribute="leading" id="HCj-PP-cxQ"/>
                                     <constraint firstItem="Mq2-XE-xAi" firstAttribute="top" secondItem="Bq4-JO-7md" secondAttribute="bottom" constant="8" symbolic="YES" id="LaJ-fj-LaL"/>
+                                    <constraint firstItem="Rje-Gj-D6I" firstAttribute="trailing" secondItem="UHH-rf-V5x" secondAttribute="trailing" id="NlK-O9-TpE"/>
+                                    <constraint firstAttribute="bottom" secondItem="Rje-Gj-D6I" secondAttribute="bottom" constant="370" id="UIL-x4-qD2"/>
                                     <constraint firstItem="ZUL-6l-j6G" firstAttribute="trailing" secondItem="QQg-Ch-J6F" secondAttribute="trailing" id="Vpe-Fh-cTX"/>
                                     <constraint firstItem="Mq2-XE-xAi" firstAttribute="trailing" secondItem="QQg-Ch-J6F" secondAttribute="trailing" id="Z8r-Vz-mnN"/>
                                     <constraint firstItem="ZUL-6l-j6G" firstAttribute="top" secondItem="pK3-fj-Na6" secondAttribute="top" constant="20" id="aiz-EB-OSJ"/>
                                     <constraint firstItem="ZUL-6l-j6G" firstAttribute="leading" secondItem="pK3-fj-Na6" secondAttribute="leading" constant="20" id="bjC-6j-vTE"/>
                                     <constraint firstItem="dnQ-Md-3xy" firstAttribute="top" secondItem="UHH-rf-V5x" secondAttribute="top" id="bm7-9u-UZx"/>
-                                    <constraint firstAttribute="bottom" secondItem="UHH-rf-V5x" secondAttribute="bottom" constant="408" id="dxj-Hf-TVj"/>
                                     <constraint firstItem="dnQ-Md-3xy" firstAttribute="bottom" secondItem="UHH-rf-V5x" secondAttribute="bottom" id="hfG-sP-40d"/>
                                     <constraint firstItem="Bq4-JO-7md" firstAttribute="top" secondItem="QQg-Ch-J6F" secondAttribute="bottom" constant="14" id="nJO-xx-vtf"/>
                                     <constraint firstItem="QQg-Ch-J6F" firstAttribute="leading" secondItem="ZUL-6l-j6G" secondAttribute="leading" id="uY0-b9-k1O"/>
@@ -123,6 +134,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="closeButton" destination="dnQ-Md-3xy" id="4Fe-9U-Df3"/>
+                        <outlet property="loginButton" destination="Rje-Gj-D6I" id="yTd-jg-pxa"/>
                         <outlet property="passwordInput" destination="Mq2-XE-xAi" id="79g-35-QlY"/>
                         <outlet property="signupButton" destination="UHH-rf-V5x" id="5WL-bP-tKf"/>
                         <outlet property="usernameInput" destination="QQg-Ch-J6F" id="HG0-6v-Tle"/>
