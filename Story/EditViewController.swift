@@ -56,9 +56,15 @@ class EditViewController: UIViewController, UITextViewDelegate {
             object.setObject(option2TextView.text, forKey: "option2")
             object.setObject(PFUser.currentUser()!, forKey: "owner")
             if let node = self.node {
-                object.setObject(false, forKey: "root")
+                if let root = node["root"] as? PFObject {
+                    object.setObject(root, forKey: "root")
+                    root.incrementKey("countNodes")
+                    root.saveInBackground()
+                }
             } else {
-                object.setObject(true, forKey: "root")
+                object.setObject(NSLocale.preferredLanguages()[0] as! String, forKey: "lang")
+                object.setObject(1, forKey: "countNodes")
+                object.setObject(0, forKey: "entryBarrier")
             }
             saveButton.enabled = false
             object.saveInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in

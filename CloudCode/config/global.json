@@ -1,0 +1,14 @@
+{
+  "global": {
+    "parseVersion": "1.5.0"
+  },
+  "applications": {
+    "Story": {
+      "applicationId": "tYaXvqvvAL6m7MNV7LaQHtfaLA6lRA4k8GC0YeNf",
+      "masterKey": "zRClZ5GJtJhX9XPwVXjOykU4dgG8pefQ3OKrLcSm"
+    },
+    "_default": {
+      "link": "Story"
+    }
+  }
+}
