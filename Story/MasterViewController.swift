@@ -48,7 +48,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func createAnonymousUserAndUpdate() {
         PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
             if let error = error {
-                
+                UIAlertController.showAlertWithError(error)
             } else {
                 self.updateContent()
             }
@@ -69,7 +69,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         query.findObjectsInBackgroundWithBlock { (results: [AnyObject]?, error: NSError?) -> Void in
             self.refreshControl.endRefreshing()
             if let error = error {
-                println("error: \(error)")
+                UIAlertController.showAlertWithError(error)
             } else if let nodes = results as? [PFObject] {
                 self.objects = nodes
                 self.tableView.reloadData()
@@ -77,7 +77,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         PFUser.currentUser()?.fetchInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
             if let error = error {
-                println("error: \(error)")
+                UIAlertController.showAlertWithError(error)
             } else if let user = object as? PFUser {
                 var username = NSLocalizedString("anonymous", comment: "")
                 if let remoteUsername = user["username"] as? String {
@@ -110,7 +110,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             sender.enabled = false
             PFUser.logOutInBackgroundWithBlock({ (error: NSError?) -> Void in
                 if let error = error {
-                    
+                    UIAlertController.showAlertWithError(error)
                 } else {
                     sender.enabled = true
                     self.createAnonymousUserAndUpdate()

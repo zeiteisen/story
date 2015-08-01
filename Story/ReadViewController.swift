@@ -15,6 +15,8 @@ class ReadViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setLabelsWithNode(node)
+        title = NSLocalizedString("read_title", comment: "")
+        likeButton.setTitle(NSLocalizedString("like", comment: ""), forState: .Normal)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -50,7 +52,7 @@ class ReadViewController: UIViewController {
             query.whereKey("likesRelation", equalTo: PFUser.currentUser()!)
             query.findObjectsInBackgroundWithBlock { (results: [AnyObject]?, error: NSError?) -> Void in
                 if let error = error {
-                    // do nothing
+                    UIAlertController.showAlertWithError(error)
                 } else if results?.count > 0 {
                     self.likeButton.backgroundColor = UIColor.getColorForAlreadyLiked()
                 } else {
@@ -76,7 +78,7 @@ class ReadViewController: UIViewController {
             self.button2.enabled = true
             self.likeButton.enabled = true
             if let error = error {
-                println("error: \(error)")
+                UIAlertController.showAlertWithError(error)
             } else if let results = results as? Array<PFObject> {
                 let next = results.first!
                 self.node = next
@@ -92,6 +94,7 @@ class ReadViewController: UIViewController {
             PFCloud.callFunctionInBackground("like", withParameters: ["node": nodeObjectId], block: { (result: AnyObject?, error: NSError?) -> Void in
                 if let error = error {
                     sender.enabled = true
+                    UIAlertController.showAlertWithError(error)
                 } else {
                     sender.enabled = false
                     sender.backgroundColor = UIColor.getColorForAlreadyLiked()

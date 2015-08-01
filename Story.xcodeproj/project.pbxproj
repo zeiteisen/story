@@ -31,6 +31,8 @@
 		FC89B5CD1B6974790037ABE5 /* SZTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC89B5CC1B6974790037ABE5 /* SZTextView.m */; };
 		FC89B5CF1B69760A0037ABE5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89B5CE1B69760A0037ABE5 /* LoginViewController.swift */; };
 		FC89B5D11B697D940037ABE5 /* ReadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89B5D01B697D940037ABE5 /* ReadViewController.swift */; };
+		FC9BCC9E1B6D626900806A71 /* UIAlertController+SimpleAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9BCC9D1B6D626900806A71 /* UIAlertController+SimpleAlert.swift */; };
+		FC9BCCA01B6D6AE100806A71 /* RanksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9BCC9F1B6D6AE100806A71 /* RanksViewController.swift */; };
 		FCE424F71B6CEECE00D3B922 /* UIColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE424F61B6CEECE00D3B922 /* UIColor+Theme.swift */; };
 		FCE54CD41B6ABB0E00E3612B /* SmartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE54CD31B6ABB0E00E3612B /* SmartButton.swift */; };
 		FCF1048A1B6C0D60008E88D2 /* TeaserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF104891B6C0D60008E88D2 /* TeaserCell.swift */; };
@@ -77,6 +79,8 @@
 		FC89B5CC1B6974790037ABE5 /* SZTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZTextView.m; sourceTree = "<group>"; };
 		FC89B5CE1B69760A0037ABE5 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		FC89B5D01B697D940037ABE5 /* ReadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadViewController.swift; sourceTree = "<group>"; };
+		FC9BCC9D1B6D626900806A71 /* UIAlertController+SimpleAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+SimpleAlert.swift"; sourceTree = "<group>"; };
+		FC9BCC9F1B6D6AE100806A71 /* RanksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RanksViewController.swift; sourceTree = "<group>"; };
 		FCE424F61B6CEECE00D3B922 /* UIColor+Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
 		FCE54CD31B6ABB0E00E3612B /* SmartButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartButton.swift; sourceTree = "<group>"; };
 		FCF104891B6C0D60008E88D2 /* TeaserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaserCell.swift; sourceTree = "<group>"; };
@@ -144,6 +148,8 @@
 				FC6E3DE61B6804DF00D651CF /* Main.storyboard */,
 				FCF104891B6C0D60008E88D2 /* TeaserCell.swift */,
 				FCE424F61B6CEECE00D3B922 /* UIColor+Theme.swift */,
+				FC9BCC9D1B6D626900806A71 /* UIAlertController+SimpleAlert.swift */,
+				FC9BCC9F1B6D6AE100806A71 /* RanksViewController.swift */,
 				FC89B5D01B697D940037ABE5 /* ReadViewController.swift */,
 				FCE54CD31B6ABB0E00E3612B /* SmartButton.swift */,
 				FC6E3DE91B6804DF00D651CF /* Images.xcassets */,
@@ -311,11 +317,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCE54CD41B6ABB0E00E3612B /* SmartButton.swift in Sources */,
+				FC9BCC9E1B6D626900806A71 /* UIAlertController+SimpleAlert.swift in Sources */,
 				FC89B5CF1B69760A0037ABE5 /* LoginViewController.swift in Sources */,
 				FC89B5C41B696A9A0037ABE5 /* EditViewController.swift in Sources */,
 				FCE424F71B6CEECE00D3B922 /* UIColor+Theme.swift in Sources */,
 				FC89B5CD1B6974790037ABE5 /* SZTextView.m in Sources */,
 				FC6E3DE31B6804DF00D651CF /* MasterViewController.swift in Sources */,
+				FC9BCCA01B6D6AE100806A71 /* RanksViewController.swift in Sources */,
 				FC89B5D11B697D940037ABE5 /* ReadViewController.swift in Sources */,
 				FC6E3DE11B6804DF00D651CF /* AppDelegate.swift in Sources */,
 				FCF1048A1B6C0D60008E88D2 /* TeaserCell.swift in Sources */,

@@ -8,6 +8,9 @@ class EditViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var option2TextView: SZTextView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var storyTitleLabel: UILabel!
+    @IBOutlet weak var option1Label: UILabel!
+    @IBOutlet weak var option2Label: UILabel!
     
     var node: PFObject?
     var option1: Bool?
@@ -22,11 +25,11 @@ class EditViewController: UIViewController, UITextViewDelegate {
         storyTextView.placeholder = NSLocalizedString("continue_story", comment: "")
         option1TextView.placeholder = NSLocalizedString("option_1", comment: "")
         option2TextView.placeholder = NSLocalizedString("option_2", comment: "")
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        storyTextView.becomeFirstResponder()
+        title = NSLocalizedString("edit_title", comment: "")
+        storyTitleLabel.text = NSLocalizedString("write_story_intro", comment: "")
+        option1Label.text = NSLocalizedString("option_1_info", comment: "")
+        option2Label.text = NSLocalizedString("option_2_info", comment: "")
+        saveButton.setTitle(NSLocalizedString("save", comment: ""), forState: .Normal)
     }
     
     func keyboardNotification(notification: NSNotification) {
@@ -44,6 +47,11 @@ class EditViewController: UIViewController, UITextViewDelegate {
                 animations: { self.view.layoutIfNeeded() },
                 completion: nil)
         }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        storyTextView.becomeFirstResponder()
     }
     
     // MARK: - Actions
@@ -70,7 +78,7 @@ class EditViewController: UIViewController, UITextViewDelegate {
             object.saveInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in
                 if let error = error {
                     self.saveButton.enabled = true
-                    println("error saving object: \(error)")
+                    UIAlertController.showAlertWithError(error)
                 } else {
                     if let node = self.node, option1 = self.option1 {
                         if option1 {
@@ -81,7 +89,7 @@ class EditViewController: UIViewController, UITextViewDelegate {
                         node.saveInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in
                             if let error = error {
                                 self.saveButton.enabled = false
-                                println("error saving object: \(error)")
+                                UIAlertController.showAlertWithError(error)
                             } else {
                                 self.navigationController?.popToRootViewControllerAnimated(true)
                             }
