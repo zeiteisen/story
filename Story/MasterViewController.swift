@@ -34,6 +34,8 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "updateContent", forControlEvents: UIControlEvents.ValueChanged)
         tableView.addSubview(refreshControl)
+        
+        Ranks.getRankDescription()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -86,11 +88,9 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                 }
                 self.usernameLabel.text = NSLocalizedString("your_name", comment: "") + ": \(username)"
-                var likes = 0
-                if let remoteLikes = user["likes"] as? NSNumber {
-                    likes = remoteLikes.integerValue
-                }
-                self.rankLabel.text = NSLocalizedString("your_rank", comment: "") + ": \(likes)"
+                var likes = PFUser.getCurrentUserLikes()
+                let rankString = Ranks.getRankStringForLikes(likes)
+                self.rankLabel.text = NSLocalizedString("your_rank", comment: "") + " \(rankString) " + "(\(likes))"
             }
         })
 
@@ -130,6 +130,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let object = objects[indexPath.row]
                 let controller = (segue.destinationViewController) as! ReadViewController
                 controller.node = object
+                var entryBarrier = 0
+                if let remoteBarrier = object["entryBarrier"] as? NSNumber {
+                    entryBarrier = remoteBarrier.integerValue
+                }
+                controller.entryBarrier = entryBarrier
             }
         }
     }
@@ -148,7 +153,8 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.countNodesLabel.text = NSLocalizedString("count_nodes", comment: "") + " \(countNodes.integerValue)"
         }
         if let entryBarrier = object["entryBarrier"] as? NSNumber {
-            cell.entryBarrierLabel.text = NSLocalizedString("enty_barrier", comment: "") + " \(entryBarrier.integerValue)"
+            let rankString = Ranks.getRankStringForLikes(entryBarrier.integerValue)
+            cell.entryBarrierLabel.text = NSLocalizedString("enty_barrier", comment: "") + " \(rankString)" + "(\(entryBarrier.integerValue))"
         }
         return cell
     }

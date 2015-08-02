@@ -1,7 +1,7 @@
 import UIKit
 import Parse
 
-class EditViewController: UIViewController, UITextViewDelegate {
+class EditViewController: UIViewController, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
     @IBOutlet weak var storyTextView: SZTextView!
     @IBOutlet weak var option1TextView: SZTextView!
@@ -11,7 +11,12 @@ class EditViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var storyTitleLabel: UILabel!
     @IBOutlet weak var option1Label: UILabel!
     @IBOutlet weak var option2Label: UILabel!
+    @IBOutlet weak var saveBarButton: UIBarButtonItem!
+    @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var pickerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var authorRankLabel: UILabel!
     
+    var pickerDataSource: Array<NSDictionary>?
     var node: PFObject?
     var option1: Bool?
     
@@ -30,6 +35,16 @@ class EditViewController: UIViewController, UITextViewDelegate {
         option1Label.text = NSLocalizedString("option_1_info", comment: "")
         option2Label.text = NSLocalizedString("option_2_info", comment: "")
         saveButton.setTitle(NSLocalizedString("save", comment: ""), forState: .Normal)
+        saveBarButton.title = NSLocalizedString("save", comment: "")
+        if node != nil {
+            pickerHeightConstraint.constant = 0
+            pickerView.hidden = true
+            authorRankLabel.text = ""
+        } else {
+            authorRankLabel.text = NSLocalizedString("edit_author_rank_description", comment: "")
+        }
+        var likes = PFUser.getCurrentUserLikes()
+        pickerDataSource = Ranks.getRanksForLikes(likes)
     }
     
     func keyboardNotification(notification: NSNotification) {
@@ -72,11 +87,16 @@ class EditViewController: UIViewController, UITextViewDelegate {
             } else {
                 object.setObject(NSLocale.preferredLanguages()[0] as! String, forKey: "lang")
                 object.setObject(1, forKey: "countNodes")
-                object.setObject(0, forKey: "entryBarrier")
+                let selectedRow = pickerView.selectedRowInComponent(0)
+                let dict = pickerDataSource![selectedRow]
+                let entryBarrier = dict["likes"] as! NSNumber
+                object.setObject(entryBarrier.integerValue, forKey: "entryBarrier")
             }
             saveButton.enabled = false
+            saveBarButton.enabled = false
             object.saveInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in
                 if let error = error {
+                    self.saveBarButton.enabled = true
                     self.saveButton.enabled = true
                     UIAlertController.showAlertWithError(error)
                 } else {
@@ -89,13 +109,14 @@ class EditViewController: UIViewController, UITextViewDelegate {
                         node.saveInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in
                             if let error = error {
                                 self.saveButton.enabled = false
+                                self.saveBarButton.enabled = false
                                 UIAlertController.showAlertWithError(error)
                             } else {
-                                self.navigationController?.popToRootViewControllerAnimated(true)
+                                self.navigationController?.popViewControllerAnimated(true)
                             }
                         })
                     } else {
-                        self.navigationController?.popToRootViewControllerAnimated(true)
+                        self.navigationController?.popViewControllerAnimated(true)
                     }
                 }
             })
@@ -117,4 +138,26 @@ class EditViewController: UIViewController, UITextViewDelegate {
         return true
     }
     
+    // MARK: - PickerDelegate
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if let pickerDataSource = pickerDataSource {
+            return pickerDataSource.count
+        }
+        return 0
+    }
+    
+    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        var title = "error";
+        if let pickerDataSource = pickerDataSource {
+            let dict = pickerDataSource[row]
+            let rankKey = dict["titleKey"] as! String
+            title = NSLocalizedString(rankKey, comment: "")
+        }
+        return NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName:UIColor.getColorForText()])
+    }
 }

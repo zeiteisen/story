@@ -5,6 +5,7 @@ class ReadViewController: UIViewController {
 
     var node: PFObject!
     var selectedOption1 = true
+    var entryBarrier = 0
     
     @IBOutlet weak var storyLabel: UILabel!
     @IBOutlet weak var button1: UIButton!
@@ -87,6 +88,20 @@ class ReadViewController: UIViewController {
         })
     }
     
+    func showStoryEditor() {
+        let likes = PFUser.getCurrentUserLikes()
+        if likes >= entryBarrier {
+            performSegueWithIdentifier("storyEditor", sender: self)
+        } else {
+            let alert = UIAlertController(title: NSLocalizedString("rank_to_low_title", comment: ""), message: NSLocalizedString("rank_to_low_description", comment: ""), preferredStyle: .Alert)
+            let action = UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: { (action: UIAlertAction!) -> Void in
+                
+            })
+            alert.addAction(action)
+            presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
     // MARK: - Actions
     
     @IBAction func likeTouched(sender: UIButton) {
@@ -108,7 +123,7 @@ class ReadViewController: UIViewController {
         if let next = node["next1"] as? PFObject {
             updateContentWithNext(next)
         } else {
-            performSegueWithIdentifier("storyEditor", sender: self)
+            showStoryEditor()
         }
     }
     
@@ -117,7 +132,7 @@ class ReadViewController: UIViewController {
         if let next = node["next2"] as? PFObject {
             updateContentWithNext(next)
         } else {
-            performSegueWithIdentifier("storyEditor", sender: self)
+            showStoryEditor()
         }
     }
 }
