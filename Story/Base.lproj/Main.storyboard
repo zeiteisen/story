@@ -332,7 +332,13 @@
                             <constraint firstItem="I9R-QC-yhr" firstAttribute="top" secondItem="cHy-oV-q3G" secondAttribute="bottom" id="hOU-cq-ec0"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="1Et-M4-yJN"/>
+                    <navigationItem key="navigationItem" id="1Et-M4-yJN">
+                        <barButtonItem key="leftBarButtonItem" systemItem="action" id="gtR-IF-djv">
+                            <connections>
+                                <action selector="shareTouched:" destination="kHz-lF-dTW" id="kSg-k1-5Mp"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="loginButton" destination="m8y-gR-fOj" id="3vG-JJ-RA6"/>
                         <outlet property="rankLabel" destination="LS8-uF-hb8" id="Zdw-ai-XeH"/>
@@ -743,7 +749,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Vod-zL-g6G"/>
+        <segue reference="HOA-UW-tvP"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
 </document>

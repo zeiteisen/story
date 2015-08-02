@@ -20,7 +20,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
         tableView.tableFooterView = UIView(frame: CGRectZero)
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -108,6 +108,18 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     // MARK: - Actions 
+    @IBAction func shareTouched(sender: AnyObject) {
+        var sharingItems = [AnyObject]()
+        sharingItems.append(NSLocalizedString("share_text", comment: ""))
+//        if let image = sharingImage {
+//            sharingItems.append(image)
+//        }
+        if let url = NSURL(string: "http://apple.co/1OIBcnw") {
+            sharingItems.append(url)
+        }
+        let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
+        self.presentViewController(activityViewController, animated: true, completion: nil)
+    }
     
     @IBAction func ranksTouched(sender: AnyObject) {
     }
