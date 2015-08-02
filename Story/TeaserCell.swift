@@ -7,7 +7,16 @@ class TeaserCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+//        setTranslatesAutoresizingMaskINtoConstraints: NO
+//        setTranslatesAutoresizingMaskIntoConstraints(false)
         backgroundColor = UIColor.clearColor()
         contentView.backgroundColor = UIColor.clearColor()
     }
+    
+//    override func didMoveToSuperview() {
+//        super.didMoveToSuperview()
+//        layoutIfNeeded()
+//    }
+    
+    
 }

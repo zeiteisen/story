@@ -77,6 +77,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             } else if let nodes = results as? [PFObject] {
                 self.objects = nodes
                 self.tableView.reloadData()
+                let delayTime = dispatch_time(DISPATCH_TIME_NOW,
+                    Int64(0 * Double(NSEC_PER_SEC)))
+                dispatch_after(delayTime, dispatch_get_main_queue()) {
+                    self.tableView.reloadData()
+                }
             }
         }
         PFUser.currentUser()?.fetchInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
@@ -132,11 +137,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let object = objects[indexPath.row]
                 let controller = (segue.destinationViewController) as! ReadViewController
                 controller.node = object
-                var entryBarrier = 0
-                if let remoteBarrier = object["entryBarrier"] as? NSNumber {
-                    entryBarrier = remoteBarrier.integerValue
-                }
-                controller.entryBarrier = entryBarrier
+                controller.root = object
             }
         }
     }
@@ -158,6 +159,8 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let rankString = Ranks.getRankStringForLikes(entryBarrier.integerValue)
             cell.entryBarrierLabel.text = NSLocalizedString("enty_barrier", comment: "") + " \(rankString)" + "(\(entryBarrier.integerValue))"
         }
+        cell.setNeedsUpdateConstraints()
+        cell.updateConstraintsIfNeeded()
         return cell
     }
 

@@ -19,6 +19,7 @@ class EditViewController: UIViewController, UITextViewDelegate, UIPickerViewData
     var pickerDataSource: Array<NSDictionary>?
     var node: PFObject?
     var option1: Bool?
+    var root: PFObject?
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self);
@@ -78,12 +79,10 @@ class EditViewController: UIViewController, UITextViewDelegate, UIPickerViewData
             object.setObject(option1TextView.text, forKey: "option1")
             object.setObject(option2TextView.text, forKey: "option2")
             object.setObject(PFUser.currentUser()!, forKey: "owner")
-            if let node = self.node {
-                if let root = node["root"] as? PFObject {
-                    object.setObject(root, forKey: "root")
-                    root.incrementKey("countNodes")
-                    root.saveInBackground()
-                }
+            if let root = self.root {
+                object.setObject(root, forKey: "root")
+                root.incrementKey("countNodes")
+                root.saveInBackground()
             } else {
                 object.setObject(NSLocale.preferredLanguages()[0] as! String, forKey: "lang")
                 object.setObject(1, forKey: "countNodes")

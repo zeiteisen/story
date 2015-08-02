@@ -5,7 +5,7 @@ class ReadViewController: UIViewController {
 
     var node: PFObject!
     var selectedOption1 = true
-    var entryBarrier = 0
+    var root: PFObject!
     
     @IBOutlet weak var storyLabel: UILabel!
     @IBOutlet weak var button1: UIButton!
@@ -26,6 +26,7 @@ class ReadViewController: UIViewController {
             let target = segue.destinationViewController as! EditViewController
             target.node = node
             target.option1 = selectedOption1
+            target.root = root
         }
     }
     
@@ -90,6 +91,10 @@ class ReadViewController: UIViewController {
     
     func showStoryEditor() {
         let likes = PFUser.getCurrentUserLikes()
+        var entryBarrier = 0
+        if let remoteBarrier = root["entryBarrier"] as? NSNumber {
+            entryBarrier = remoteBarrier.integerValue
+        }
         if likes >= entryBarrier {
             performSegueWithIdentifier("storyEditor", sender: self)
         } else {
