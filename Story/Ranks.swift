@@ -33,7 +33,7 @@ class Ranks {
     class func getRanksForLikes(countLikes: Int) -> Array<NSDictionary> {
         let ranks = NSArray(contentsOfFile: NSBundle.mainBundle().pathForResource("Ranks", ofType: "plist")!)!
         var retVal = Array<NSDictionary>()
-        for var index = ranks.count - 1; index > 0; --index {
+        for var index = ranks.count - 1; index >= 0; --index {
             let obj: AnyObject = ranks[index]
             if let dict = obj as? NSDictionary {
                 let likes = dict["likes"] as! NSNumber

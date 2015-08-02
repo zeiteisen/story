@@ -25,8 +25,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.tableFooterView = UIView(frame: CGRectZero)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
-
+        ranksButton.setTitle(NSLocalizedString("ranks", comment: ""), forState: .Normal)
         loginButton.setTitle(NSLocalizedString("wait", comment: ""), forState: .Normal)
+        usernameLabel.text = NSLocalizedString("wait", comment: "")
+        rankLabel.text = NSLocalizedString("wait", comment: "")
         title = NSLocalizedString("start_title", comment: "")
         if (PFUser.currentUser()?.objectId == nil) {
             createAnonymousUserAndUpdate()
@@ -38,8 +40,8 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         Ranks.getRankDescription()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         updateContent()
     }
     
@@ -87,7 +89,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         username = remoteUsername
                     }
                 }
-                self.usernameLabel.text = NSLocalizedString("your_name", comment: "") + ": \(username)"
+                self.usernameLabel.text = NSLocalizedString("your_name", comment: "") + " \(username)"
                 var likes = PFUser.getCurrentUserLikes()
                 let rankString = Ranks.getRankStringForLikes(likes)
                 self.rankLabel.text = NSLocalizedString("your_rank", comment: "") + " \(rankString) " + "(\(likes))"

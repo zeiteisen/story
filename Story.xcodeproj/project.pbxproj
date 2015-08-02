@@ -36,6 +36,8 @@
 		FCA1F9F71B6E2E2700E32582 /* Ranks.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA1F9F61B6E2E2700E32582 /* Ranks.swift */; };
 		FCA1F9F91B6E317000E32582 /* Ranks.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCA1F9F81B6E317000E32582 /* Ranks.plist */; };
 		FCA1F9FB1B6E462700E32582 /* PFUser+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA1F9FA1B6E462700E32582 /* PFUser+Data.swift */; };
+		FCA1F9FE1B6E4AE000E32582 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FCA1F9FC1B6E4AE000E32582 /* Localizable.strings */; };
+		FCA1FA011B6E52E000E32582 /* UIView+Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA1FA001B6E52E000E32582 /* UIView+Shake.swift */; };
 		FCE424F71B6CEECE00D3B922 /* UIColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE424F61B6CEECE00D3B922 /* UIColor+Theme.swift */; };
 		FCE54CD41B6ABB0E00E3612B /* SmartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE54CD31B6ABB0E00E3612B /* SmartButton.swift */; };
 		FCF1048A1B6C0D60008E88D2 /* TeaserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF104891B6C0D60008E88D2 /* TeaserCell.swift */; };
@@ -87,6 +89,9 @@
 		FCA1F9F61B6E2E2700E32582 /* Ranks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ranks.swift; sourceTree = "<group>"; };
 		FCA1F9F81B6E317000E32582 /* Ranks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Ranks.plist; sourceTree = "<group>"; };
 		FCA1F9FA1B6E462700E32582 /* PFUser+Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFUser+Data.swift"; sourceTree = "<group>"; };
+		FCA1F9FD1B6E4AE000E32582 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FCA1F9FF1B6E4B3700E32582 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FCA1FA001B6E52E000E32582 /* UIView+Shake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Shake.swift"; sourceTree = "<group>"; };
 		FCE424F61B6CEECE00D3B922 /* UIColor+Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
 		FCE54CD31B6ABB0E00E3612B /* SmartButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartButton.swift; sourceTree = "<group>"; };
 		FCF104891B6C0D60008E88D2 /* TeaserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaserCell.swift; sourceTree = "<group>"; };
@@ -157,12 +162,14 @@
 				FC9BCC9D1B6D626900806A71 /* UIAlertController+SimpleAlert.swift */,
 				FC9BCC9F1B6D6AE100806A71 /* RanksViewController.swift */,
 				FCA1F9F61B6E2E2700E32582 /* Ranks.swift */,
+				FCA1FA001B6E52E000E32582 /* UIView+Shake.swift */,
 				FCA1F9F81B6E317000E32582 /* Ranks.plist */,
 				FCA1F9FA1B6E462700E32582 /* PFUser+Data.swift */,
 				FC89B5D01B697D940037ABE5 /* ReadViewController.swift */,
 				FCE54CD31B6ABB0E00E3612B /* SmartButton.swift */,
 				FC6E3DE91B6804DF00D651CF /* Images.xcassets */,
 				FC6E3DEB1B6804DF00D651CF /* LaunchScreen.xib */,
+				FCA1F9FC1B6E4AE000E32582 /* Localizable.strings */,
 				FC6E3DDE1B6804DF00D651CF /* Supporting Files */,
 			);
 			path = Story;
@@ -286,6 +293,7 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = FC6E3DD21B6804DF00D651CF;
 			productRefGroup = FC6E3DDC1B6804DF00D651CF /* Products */;
@@ -306,6 +314,7 @@
 				FC6E3DE81B6804DF00D651CF /* Main.storyboard in Resources */,
 				FC89B5C81B696DCD0037ABE5 /* Blue Palette.png in Resources */,
 				FCA1F9F91B6E317000E32582 /* Ranks.plist in Resources */,
+				FCA1F9FE1B6E4AE000E32582 /* Localizable.strings in Resources */,
 				FC89B5C61B696C8C0037ABE5 /* Color Pattern.png in Resources */,
 				FC6E3DED1B6804DF00D651CF /* LaunchScreen.xib in Resources */,
 				FC6E3DEA1B6804DF00D651CF /* Images.xcassets in Resources */,
@@ -329,6 +338,7 @@
 				FCE54CD41B6ABB0E00E3612B /* SmartButton.swift in Sources */,
 				FC9BCC9E1B6D626900806A71 /* UIAlertController+SimpleAlert.swift in Sources */,
 				FC89B5CF1B69760A0037ABE5 /* LoginViewController.swift in Sources */,
+				FCA1FA011B6E52E000E32582 /* UIView+Shake.swift in Sources */,
 				FC89B5C41B696A9A0037ABE5 /* EditViewController.swift in Sources */,
 				FCA1F9FB1B6E462700E32582 /* PFUser+Data.swift in Sources */,
 				FCE424F71B6CEECE00D3B922 /* UIColor+Theme.swift in Sources */,
@@ -375,6 +385,15 @@
 				FC6E3DEC1B6804DF00D651CF /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		FCA1F9FC1B6E4AE000E32582 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FCA1F9FD1B6E4AE000E32582 /* Base */,
+				FCA1F9FF1B6E4B3700E32582 /* de */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

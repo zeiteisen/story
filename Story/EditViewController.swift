@@ -120,6 +120,16 @@ class EditViewController: UIViewController, UITextViewDelegate, UIPickerViewData
                     }
                 }
             })
+        } else {
+            if storyTextView.text == "" {
+                storyTextView.shake()
+            }
+            if option1TextView.text == "" {
+                option1TextView.shake()
+            }
+            if option2TextView.text == "" {
+                option2TextView.shake()
+            }
         }
     }
     

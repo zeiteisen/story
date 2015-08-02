@@ -42,16 +42,32 @@
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QQg-Ch-J6F">
                                         <rect key="frame" x="20" y="51" width="560" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Dtx-aP-c2T">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="60"/>
+                                            </constraint>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                         <connections>
                                             <outlet property="delegate" destination="FLi-xh-WhN" id="AZ8-XL-1GL"/>
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mq2-XE-xAi">
                                         <rect key="frame" x="20" y="89" width="560" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="yG1-K6-ffA">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="60"/>
+                                            </constraint>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                         <connections>
                                             <outlet property="delegate" destination="FLi-xh-WhN" id="X1B-W4-8zl"/>
                                         </connections>
@@ -61,6 +77,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UHH-rf-V5x">
                                         <rect key="frame" x="20" y="127" width="560" height="30"/>
@@ -68,6 +87,9 @@
                                         <state key="normal" title="Login">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                         <connections>
                                             <action selector="loginTouched:" destination="FLi-xh-WhN" eventType="touchUpInside" id="dSm-to-8Vn"/>
                                         </connections>
@@ -78,6 +100,9 @@
                                         <state key="normal" title="Signup">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                         <connections>
                                             <action selector="signupTouched:" destination="FLi-xh-WhN" eventType="touchUpInside" id="Iov-Eh-s0w"/>
                                         </connections>
@@ -88,6 +113,9 @@
                                         <state key="normal" title="Close">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                         <connections>
                                             <action selector="closeTouched:" destination="FLi-xh-WhN" eventType="touchUpInside" id="dfN-LJ-yzT"/>
                                         </connections>
@@ -95,13 +123,19 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="ZUL-6l-j6G" secondAttribute="centerX" id="12d-SH-hI5"/>
-                                    <constraint firstItem="Rje-Gj-D6I" firstAttribute="top" secondItem="UHH-rf-V5x" secondAttribute="bottom" constant="20" id="5yI-sS-Mza"/>
+                                    <constraint firstItem="Rje-Gj-D6I" firstAttribute="top" secondItem="UHH-rf-V5x" secondAttribute="bottom" constant="20" id="5yI-sS-Mza">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="32"/>
+                                    </constraint>
                                     <constraint firstItem="UHH-rf-V5x" firstAttribute="trailing" secondItem="Mq2-XE-xAi" secondAttribute="trailing" id="74e-Jf-uU3"/>
-                                    <constraint firstItem="UHH-rf-V5x" firstAttribute="top" secondItem="Mq2-XE-xAi" secondAttribute="bottom" constant="8" symbolic="YES" id="95X-P0-MU7"/>
+                                    <constraint firstItem="UHH-rf-V5x" firstAttribute="top" secondItem="Mq2-XE-xAi" secondAttribute="bottom" constant="8" symbolic="YES" id="95X-P0-MU7">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
                                     <constraint firstItem="Rje-Gj-D6I" firstAttribute="trailing" secondItem="dnQ-Md-3xy" secondAttribute="trailing" id="BsW-82-6QN"/>
                                     <constraint firstItem="UHH-rf-V5x" firstAttribute="leading" secondItem="Mq2-XE-xAi" secondAttribute="leading" id="DCe-Kw-IOb"/>
                                     <constraint firstAttribute="trailing" secondItem="ZUL-6l-j6G" secondAttribute="trailing" constant="8" id="Dxa-Ra-as8"/>
-                                    <constraint firstItem="QQg-Ch-J6F" firstAttribute="top" secondItem="ZUL-6l-j6G" secondAttribute="bottom" constant="10" id="Guv-BX-wBN"/>
+                                    <constraint firstItem="QQg-Ch-J6F" firstAttribute="top" secondItem="ZUL-6l-j6G" secondAttribute="bottom" constant="10" id="Guv-BX-wBN">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
                                     <constraint firstItem="Rje-Gj-D6I" firstAttribute="leading" secondItem="UHH-rf-V5x" secondAttribute="leading" id="HCj-PP-cxQ"/>
                                     <constraint firstItem="Rje-Gj-D6I" firstAttribute="leading" secondItem="dnQ-Md-3xy" secondAttribute="leading" id="Jhv-Mn-X9z"/>
                                     <constraint firstItem="Rje-Gj-D6I" firstAttribute="trailing" secondItem="UHH-rf-V5x" secondAttribute="trailing" id="NlK-O9-TpE"/>
@@ -109,11 +143,15 @@
                                     <constraint firstAttribute="bottom" secondItem="dnQ-Md-3xy" secondAttribute="bottom" constant="8" id="QaS-1M-GC7"/>
                                     <constraint firstItem="ZUL-6l-j6G" firstAttribute="trailing" secondItem="QQg-Ch-J6F" secondAttribute="trailing" id="Vpe-Fh-cTX"/>
                                     <constraint firstItem="Mq2-XE-xAi" firstAttribute="trailing" secondItem="QQg-Ch-J6F" secondAttribute="trailing" id="Z8r-Vz-mnN"/>
-                                    <constraint firstItem="dnQ-Md-3xy" firstAttribute="top" secondItem="Rje-Gj-D6I" secondAttribute="bottom" constant="20" id="aBc-MN-Sj8"/>
+                                    <constraint firstItem="dnQ-Md-3xy" firstAttribute="top" secondItem="Rje-Gj-D6I" secondAttribute="bottom" constant="20" id="aBc-MN-Sj8">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="32"/>
+                                    </constraint>
                                     <constraint firstItem="ZUL-6l-j6G" firstAttribute="top" secondItem="pK3-fj-Na6" secondAttribute="top" constant="20" id="aiz-EB-OSJ"/>
                                     <constraint firstItem="ZUL-6l-j6G" firstAttribute="leading" secondItem="pK3-fj-Na6" secondAttribute="leading" constant="20" id="bjC-6j-vTE"/>
                                     <constraint firstItem="QQg-Ch-J6F" firstAttribute="leading" secondItem="ZUL-6l-j6G" secondAttribute="leading" id="uY0-b9-k1O"/>
-                                    <constraint firstItem="Mq2-XE-xAi" firstAttribute="top" secondItem="QQg-Ch-J6F" secondAttribute="bottom" constant="8" id="xS4-hU-x4K"/>
+                                    <constraint firstItem="Mq2-XE-xAi" firstAttribute="top" secondItem="QQg-Ch-J6F" secondAttribute="bottom" constant="8" id="xS4-hU-x4K">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -159,12 +197,18 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Your rank" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LS8-uF-hb8">
                                         <rect key="frame" x="8" y="37" width="73" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZV-bh-Nzs" customClass="SmartButton" customModule="Story" customModuleProvider="target">
                                         <rect key="frame" x="8" y="66" width="288" height="30"/>
@@ -172,6 +216,9 @@
                                         <state key="normal" title="Ranks">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                         <connections>
                                             <action selector="ranksTouched:" destination="kHz-lF-dTW" eventType="touchUpInside" id="6hK-5H-KIh"/>
                                             <segue destination="rf4-oj-U8n" kind="show" id="Ehq-qE-xVc"/>
@@ -183,6 +230,9 @@
                                         <state key="normal" title="Register">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                         <connections>
                                             <action selector="loginTouched:" destination="kHz-lF-dTW" eventType="touchUpInside" id="S6w-qY-mDe"/>
                                         </connections>
@@ -223,25 +273,34 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Nodes:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzx-qt-ffV">
                                                     <rect key="frame" x="8" y="160" width="46" height="21"/>
                                                     <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
                                                     <color key="textColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="18"/>
+                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nodes:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wr7-Tz-Jba">
-                                                    <rect key="frame" x="62" y="162" width="46" height="17"/>
+                                                    <rect key="frame" x="70" y="162" width="46" height="17"/>
                                                     <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
                                                     <color key="textColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="18"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Hzx-qt-ffV" firstAttribute="top" secondItem="O0I-JL-Ktw" secondAttribute="bottom" constant="8" id="1eY-GK-196"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Hzx-qt-ffV" secondAttribute="bottom" id="297-xf-yBO"/>
                                                 <constraint firstItem="Hzx-qt-ffV" firstAttribute="leading" secondItem="O0G-Wc-xNT" secondAttribute="leadingMargin" id="6fb-RU-XgY"/>
-                                                <constraint firstItem="wr7-Tz-Jba" firstAttribute="leading" secondItem="Hzx-qt-ffV" secondAttribute="trailing" constant="8" id="I0G-U3-MHk"/>
+                                                <constraint firstItem="wr7-Tz-Jba" firstAttribute="leading" secondItem="Hzx-qt-ffV" secondAttribute="trailing" constant="16" id="I0G-U3-MHk"/>
                                                 <constraint firstItem="wr7-Tz-Jba" firstAttribute="centerY" secondItem="Hzx-qt-ffV" secondAttribute="centerY" id="IAe-dZ-ugE"/>
                                                 <constraint firstItem="O0I-JL-Ktw" firstAttribute="top" secondItem="O0G-Wc-xNT" secondAttribute="topMargin" id="JKU-8O-1wn"/>
                                                 <constraint firstItem="O0I-JL-Ktw" firstAttribute="leading" secondItem="O0G-Wc-xNT" secondAttribute="leadingMargin" id="cFk-6w-X4O"/>
@@ -300,11 +359,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Ranks" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zrB-oi-GhZ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Ranks" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zrB-oi-GhZ">
                                 <rect key="frame" x="16" y="0.0" width="568" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                </variation>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.066666666669999999" green="0.10980392160000001" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -344,29 +406,40 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GEs-8Z-7dB">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="836"/>
                                 <subviews>
-                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Story Editor" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Udl-sg-SXt">
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Story Editor" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Udl-sg-SXt">
                                         <rect key="frame" x="20" y="8" width="560" height="17"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" size="system"/>
                                         <color key="textColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                     </label>
-                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Option 1" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="wrb-Ao-pGX">
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Option 1" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="wrb-Ao-pGX">
                                         <rect key="frame" x="20" y="183" width="560" height="17"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" size="system"/>
                                         <color key="textColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bOl-cH-5ue" customClass="SZTextView">
                                         <rect key="frame" x="20" y="38" width="560" height="128"/>
                                         <color key="backgroundColor" red="0.062745098039215685" green="0.22745098039215686" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="128" id="dIb-1E-W9k"/>
+                                            <constraint firstAttribute="height" constant="128" id="dIb-1E-W9k">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="256"/>
+                                            </constraint>
                                         </constraints>
                                         <color key="textColor" red="0.396078431372549" green="0.70196078431372544" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                         <connections>
                                             <outlet property="delegate" destination="g9P-rv-IIA" id="Z8v-II-iKS"/>
                                         </connections>
@@ -375,38 +448,54 @@
                                         <rect key="frame" x="20" y="208" width="560" height="66"/>
                                         <color key="backgroundColor" red="0.062745098039215685" green="0.22745098039215686" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="66" id="lCh-R9-49u"/>
+                                            <constraint firstAttribute="height" constant="66" id="lCh-R9-49u">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="120"/>
+                                            </constraint>
                                         </constraints>
                                         <color key="textColor" red="0.396078431372549" green="0.70196078431372544" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                         <connections>
                                             <outlet property="delegate" destination="g9P-rv-IIA" id="H29-C8-VLi"/>
                                         </connections>
                                     </textView>
-                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Option 2" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="suW-pe-ypv">
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Option 2" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="suW-pe-ypv">
                                         <rect key="frame" x="20" y="282" width="560" height="17"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" size="system"/>
                                         <color key="textColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                     </label>
-                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Author rank" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="bnG-Fq-QO6">
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Author rank" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="bnG-Fq-QO6">
                                         <rect key="frame" x="20" y="429" width="560" height="17"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" size="system"/>
                                         <color key="textColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MAp-3Y-Amg" customClass="SZTextView">
                                         <rect key="frame" x="20" y="307" width="560" height="66"/>
                                         <color key="backgroundColor" red="0.062745098039215685" green="0.22745098039215686" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="66" id="Bdl-ed-BKP"/>
+                                            <constraint firstAttribute="height" constant="66" id="Bdl-ed-BKP">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="120"/>
+                                            </constraint>
                                         </constraints>
                                         <color key="textColor" red="0.396078431372549" green="0.70196078431372544" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                         <connections>
                                             <outlet property="delegate" destination="g9P-rv-IIA" id="wDu-EG-C2f"/>
                                         </connections>
@@ -420,6 +509,9 @@
                                         <state key="normal" title="Save">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                         <connections>
                                             <action selector="saveTouched:" destination="g9P-rv-IIA" eventType="touchUpInside" id="6Sm-9Q-k7o"/>
                                         </connections>
@@ -439,7 +531,9 @@
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="MAp-3Y-Amg" secondAttribute="trailing" constant="20" id="3kJ-SW-gKg"/>
-                                    <constraint firstItem="HWC-j3-40d" firstAttribute="top" secondItem="MAp-3Y-Amg" secondAttribute="bottom" constant="8" id="4bb-54-vsD"/>
+                                    <constraint firstItem="HWC-j3-40d" firstAttribute="top" secondItem="MAp-3Y-Amg" secondAttribute="bottom" constant="8" id="4bb-54-vsD">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
                                     <constraint firstItem="HWC-j3-40d" firstAttribute="leading" secondItem="GEs-8Z-7dB" secondAttribute="leading" constant="20" id="64c-Dm-4EH"/>
                                     <constraint firstItem="bOl-cH-5ue" firstAttribute="top" secondItem="Udl-sg-SXt" secondAttribute="bottom" constant="13" id="Aph-ns-nye"/>
                                     <constraint firstItem="bnG-Fq-QO6" firstAttribute="trailing" secondItem="HWC-j3-40d" secondAttribute="trailing" id="Arg-th-Yn0"/>
@@ -513,7 +607,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1944" y="-403"/>
+            <point key="canvasLocation" x="1944" y="-403.5"/>
         </scene>
         <!--Read View Controller-->
         <scene sceneID="cDB-gE-s2e">
@@ -535,12 +629,18 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Written By" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGH-CY-Ahu">
                                         <rect key="frame" x="8" y="161" width="584" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1QD-hY-bam" customClass="SmartButton" customModule="Story" customModuleProvider="target">
                                         <rect key="frame" x="8" y="37" width="584" height="50"/>
@@ -551,6 +651,9 @@
                                         <state key="normal" title="Button">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                         <connections>
                                             <action selector="button1Touched:" destination="qTs-bz-M3q" eventType="touchUpInside" id="0nP-U8-wxQ"/>
                                         </connections>
@@ -564,6 +667,9 @@
                                         <state key="normal" title="Button">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                         <connections>
                                             <action selector="button2Touched:" destination="qTs-bz-M3q" eventType="touchUpInside" id="CRa-aq-lbP"/>
                                         </connections>
@@ -577,6 +683,9 @@
                                         <state key="normal" title="Like">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
                                         <connections>
                                             <action selector="likeTouched:" destination="qTs-bz-M3q" eventType="touchUpInside" id="cxn-va-59t"/>
                                         </connections>
@@ -584,18 +693,26 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="1xi-Ub-nSM" firstAttribute="leading" secondItem="uIL-dy-F0g" secondAttribute="leading" constant="8" id="40l-ll-Gn7"/>
-                                    <constraint firstItem="1xi-Ub-nSM" firstAttribute="top" secondItem="1QD-hY-bam" secondAttribute="bottom" constant="8" id="5aZ-Sh-Hpc"/>
-                                    <constraint firstItem="eGH-CY-Ahu" firstAttribute="top" secondItem="1xi-Ub-nSM" secondAttribute="bottom" constant="16" id="684-u6-EuK"/>
+                                    <constraint firstItem="1xi-Ub-nSM" firstAttribute="top" secondItem="1QD-hY-bam" secondAttribute="bottom" constant="8" id="5aZ-Sh-Hpc">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
+                                    <constraint firstItem="eGH-CY-Ahu" firstAttribute="top" secondItem="1xi-Ub-nSM" secondAttribute="bottom" constant="16" id="684-u6-EuK">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="32"/>
+                                    </constraint>
                                     <constraint firstItem="1QD-hY-bam" firstAttribute="leading" secondItem="uIL-dy-F0g" secondAttribute="leading" constant="8" id="8re-vy-HFq"/>
                                     <constraint firstItem="RJf-uC-ME6" firstAttribute="leading" secondItem="uIL-dy-F0g" secondAttribute="leading" constant="8" id="CX5-qL-fbh"/>
                                     <constraint firstAttribute="bottom" secondItem="RJf-uC-ME6" secondAttribute="bottom" constant="8" id="I8Z-iS-S77"/>
                                     <constraint firstItem="eGH-CY-Ahu" firstAttribute="trailing" secondItem="uIL-dy-F0g" secondAttribute="trailingMargin" id="SeM-1j-dxb"/>
                                     <constraint firstAttribute="centerX" secondItem="BzR-wb-FXo" secondAttribute="centerX" id="V5Q-GB-Yo0"/>
                                     <constraint firstItem="BzR-wb-FXo" firstAttribute="leading" secondItem="uIL-dy-F0g" secondAttribute="leadingMargin" id="bXU-WO-b1c"/>
-                                    <constraint firstItem="RJf-uC-ME6" firstAttribute="top" secondItem="eGH-CY-Ahu" secondAttribute="bottom" constant="8" id="iQO-Jh-MTo"/>
+                                    <constraint firstItem="RJf-uC-ME6" firstAttribute="top" secondItem="eGH-CY-Ahu" secondAttribute="bottom" constant="8" id="iQO-Jh-MTo">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
                                     <constraint firstItem="BzR-wb-FXo" firstAttribute="trailing" secondItem="uIL-dy-F0g" secondAttribute="trailingMargin" id="n5i-BH-ECl"/>
                                     <constraint firstAttribute="trailing" secondItem="1QD-hY-bam" secondAttribute="trailing" constant="8" id="ncj-Fu-HYc"/>
-                                    <constraint firstItem="1QD-hY-bam" firstAttribute="top" secondItem="BzR-wb-FXo" secondAttribute="bottom" constant="8" id="onK-Yy-Fhj"/>
+                                    <constraint firstItem="1QD-hY-bam" firstAttribute="top" secondItem="BzR-wb-FXo" secondAttribute="bottom" constant="8" id="onK-Yy-Fhj">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
                                     <constraint firstAttribute="trailing" secondItem="RJf-uC-ME6" secondAttribute="trailing" constant="8" id="qR8-Ax-NWy"/>
                                     <constraint firstItem="eGH-CY-Ahu" firstAttribute="leading" secondItem="uIL-dy-F0g" secondAttribute="leadingMargin" id="rkH-p0-27H"/>
                                     <constraint firstAttribute="trailing" secondItem="1xi-Ub-nSM" secondAttribute="trailing" constant="8" id="y2X-Gj-jTT"/>
@@ -626,7 +743,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="HOA-UW-tvP"/>
+        <segue reference="Vod-zL-g6G"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.39607843139999999" green="0.70196078429999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
 </document>

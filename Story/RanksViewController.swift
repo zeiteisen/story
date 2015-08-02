@@ -8,8 +8,10 @@ class RanksViewController: UIViewController {
         super.viewDidLoad()
         
         title = NSLocalizedString("ranks", comment: "")
-//        ranksLabel.text = NSLocalizedString("ranks_description", comment: "")
-        ranksLabel.text = Ranks.getRankDescription()
+        var description = NSLocalizedString("ranks_description", comment: "")
+        description += "\n\n"
+        description += Ranks.getRankDescription()
+        ranksLabel.text = description
         /* ranks
         Editor
         Autor
