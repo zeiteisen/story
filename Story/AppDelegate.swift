@@ -1,6 +1,8 @@
 import UIKit
 import Parse
 import Bolts
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -9,6 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        Fabric.with([Crashlytics.self])
         Parse.setApplicationId("tYaXvqvvAL6m7MNV7LaQHtfaLA6lRA4k8GC0YeNf",
             clientKey: "FcfuSPC52NViKYczt3pv5dWDkhWLkOB5j5YyYTwI")
         PFUser.enableAutomaticUser()

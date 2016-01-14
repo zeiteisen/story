@@ -44,7 +44,7 @@ class EditViewController: UIViewController, UITextViewDelegate, UIPickerViewData
         } else {
             authorRankLabel.text = NSLocalizedString("edit_author_rank_description", comment: "")
         }
-        var likes = PFUser.getCurrentUserLikes()
+        let likes = PFUser.getCurrentUserLikes()
         pickerDataSource = Ranks.getRanksForLikes(likes)
     }
     
@@ -84,7 +84,7 @@ class EditViewController: UIViewController, UITextViewDelegate, UIPickerViewData
                 root.incrementKey("countNodes")
                 root.saveInBackground()
             } else {
-                object.setObject(NSLocale.preferredLanguages()[0] as! String, forKey: "lang")
+                object.setObject(NSLocale.preferredLanguages()[0] , forKey: "lang")
                 object.setObject(1, forKey: "countNodes")
                 let selectedRow = pickerView.selectedRowInComponent(0)
                 let dict = pickerDataSource![selectedRow]

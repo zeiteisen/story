@@ -84,7 +84,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func login() {
-        PFUser.logInWithUsernameInBackground(self.usernameInput.text, password: self.passwordInput.text, block: { (user: PFUser?, error: NSError?) -> Void in
+        PFUser.logInWithUsernameInBackground(self.usernameInput.text!, password: self.passwordInput.text!, block: { (user: PFUser?, error: NSError?) -> Void in
             if let error = error {
                 self.enableButtons()
                 UIAlertController.showAlertWithError(error)

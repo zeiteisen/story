@@ -52,7 +52,7 @@ class ReadViewController: UIViewController {
             let query = PFQuery(className: "Node")
             query.whereKey("objectId", equalTo: node.objectId!)
             query.whereKey("likesRelation", equalTo: PFUser.currentUser()!)
-            query.findObjectsInBackgroundWithBlock { (results: [AnyObject]?, error: NSError?) -> Void in
+            query.findObjectsInBackgroundWithBlock({ (results: [PFObject]?, error: NSError?) -> Void in
                 if let error = error {
                     UIAlertController.showAlertWithError(error)
                 } else if results?.count > 0 {
@@ -60,7 +60,7 @@ class ReadViewController: UIViewController {
                 } else {
                     self.likeButton.enabled = true
                 }
-            }
+            })
         }
         
         writtebByLabel.text = NSLocalizedString("written_by", comment: "") + " \(userName)"
@@ -75,18 +75,18 @@ class ReadViewController: UIViewController {
         button1.enabled = false
         button2.enabled = false
         likeButton.enabled = false
-        query.findObjectsInBackgroundWithBlock({ (results: [AnyObject]?, error: NSError?) -> Void in
+        query.findObjectsInBackgroundWithBlock { (results: [PFObject]?, error: NSError?) -> Void in
             self.button1.enabled = true
             self.button2.enabled = true
             self.likeButton.enabled = true
             if let error = error {
                 UIAlertController.showAlertWithError(error)
-            } else if let results = results as? Array<PFObject> {
+            } else if let results = results {
                 let next = results.first!
                 self.node = next
                 self.setLabelsWithNode(next)
             }
-        })
+        }
     }
     
     func showStoryEditor() {
@@ -99,7 +99,7 @@ class ReadViewController: UIViewController {
             performSegueWithIdentifier("storyEditor", sender: self)
         } else {
             let alert = UIAlertController(title: NSLocalizedString("rank_to_low_title", comment: ""), message: NSLocalizedString("rank_to_low_description", comment: ""), preferredStyle: .Alert)
-            let action = UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: { (action: UIAlertAction!) -> Void in
+            let action = UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: { (action: UIAlertAction) -> Void in
                 
             })
             alert.addAction(action)

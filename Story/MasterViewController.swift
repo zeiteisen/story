@@ -46,7 +46,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func shouldLogout() -> Bool {
-        return PFUser.currentUser()!.isAuthenticated() && !PFAnonymousUtils.isLinkedWithUser(PFUser.currentUser()!)
+        return PFUser.currentUser()!.authenticated && !PFAnonymousUtils.isLinkedWithUser(PFUser.currentUser()!)
     }
     
     func createAnonymousUserAndUpdate() {
@@ -70,11 +70,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         query.whereKeyDoesNotExist("root")
         query.includeKey("owner")
         query.whereKey("lang", equalTo: NSLocale.preferredLanguages()[0])
-        query.findObjectsInBackgroundWithBlock { (results: [AnyObject]?, error: NSError?) -> Void in
+        query.findObjectsInBackgroundWithBlock { (results: [PFObject]?, error: NSError?) -> Void in
             self.refreshControl.endRefreshing()
             if let error = error {
                 UIAlertController.showAlertWithError(error)
-            } else if let nodes = results as? [PFObject] {
+            } else if let nodes = results {
                 self.objects = nodes
                 self.tableView.reloadData()
                 let delayTime = dispatch_time(DISPATCH_TIME_NOW,
@@ -95,7 +95,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                 }
                 self.usernameLabel.text = NSLocalizedString("your_name", comment: "") + " \(username)"
-                var likes = PFUser.getCurrentUserLikes()
+                let likes = PFUser.getCurrentUserLikes()
                 let rankString = Ranks.getRankStringForLikes(likes)
                 self.rankLabel.text = NSLocalizedString("your_rank", comment: "") + " \(rankString) " + "(\(likes))"
             }
@@ -145,7 +145,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "Read" {
-            if let indexPath = self.tableView.indexPathForSelectedRow() {
+            if let indexPath = self.tableView.indexPathForSelectedRow {
                 let object = objects[indexPath.row]
                 let controller = (segue.destinationViewController) as! ReadViewController
                 controller.node = object

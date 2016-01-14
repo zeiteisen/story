@@ -37,7 +37,7 @@ class Ranks {
             let obj: AnyObject = ranks[index]
             if let dict = obj as? NSDictionary {
                 let likes = dict["likes"] as! NSNumber
-                let titleKey = dict["titleKey"] as! String
+                _ = dict["titleKey"] as! String
                 if countLikes >= likes.integerValue {
                     retVal.append(dict)
                 }
