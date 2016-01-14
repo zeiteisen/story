@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		68E8AB166849504BEC1F2A28 /* Pods_Story.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E04D50B9B9CC50509AB9515 /* Pods_Story.framework */; };
 		87CF45C30B9D6B739C6D413E /* Pods_StoryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A33AE9BE45C60232CE38C2BE /* Pods_StoryTests.framework */; };
+		FC4AEAF01C48564900BB1003 /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AEAEF1C48564900BB1003 /* String+Localized.swift */; };
 		FC6E3DE11B6804DF00D651CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6E3DE01B6804DF00D651CF /* AppDelegate.swift */; };
 		FC6E3DE31B6804DF00D651CF /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6E3DE21B6804DF00D651CF /* MasterViewController.swift */; };
 		FC6E3DE81B6804DF00D651CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC6E3DE61B6804DF00D651CF /* Main.storyboard */; };
@@ -62,6 +63,7 @@
 		A33AE9BE45C60232CE38C2BE /* Pods_StoryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StoryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96B37C64CA0DBD655F94603 /* Pods-Story.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Story.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Story/Pods-Story.debug.xcconfig"; sourceTree = "<group>"; };
 		CDB60AE5FA7A7CF3C410C299 /* Pods-StoryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoryTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StoryTests/Pods-StoryTests.debug.xcconfig"; sourceTree = "<group>"; };
+		FC4AEAEF1C48564900BB1003 /* String+Localized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
 		FC6E3DDB1B6804DF00D651CF /* Story.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Story.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC6E3DDF1B6804DF00D651CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC6E3DE01B6804DF00D651CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -147,6 +149,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		FC4AEAF11C48564D00BB1003 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FC4AEAEF1C48564900BB1003 /* String+Localized.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		FC6E3DD21B6804DF00D651CF = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +183,7 @@
 		FC6E3DDD1B6804DF00D651CF /* Story */ = {
 			isa = PBXGroup;
 			children = (
+				FC4AEAF11C48564D00BB1003 /* Extensions */,
 				FCAD64AF1C47ECE800CDB9CB /* Model */,
 				FCAD64AC1C47D86B00CDB9CB /* ViewControllers */,
 				FC89B5C91B69746E0037ABE5 /* ObjC */,
@@ -501,6 +512,7 @@
 				FCA1F9F71B6E2E2700E32582 /* Ranks.swift in Sources */,
 				FC89B5CD1B6974790037ABE5 /* SZTextView.m in Sources */,
 				FC6E3DE31B6804DF00D651CF /* MasterViewController.swift in Sources */,
+				FC4AEAF01C48564900BB1003 /* String+Localized.swift in Sources */,
 				FCAD64B11C47ECFE00CDB9CB /* Node.swift in Sources */,
 				FC9BCCA01B6D6AE100806A71 /* RanksViewController.swift in Sources */,
 				FC89B5D11B697D940037ABE5 /* ReadViewController.swift in Sources */,

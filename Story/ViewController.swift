@@ -31,12 +31,12 @@ class ViewController: UIViewController, UITextViewDelegate {
         mainHeightConstraint.constant = UIScreen.mainScreen().bounds.height
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillChangeFrameNotification, object: nil)
         setReadOnly()
-        let rootObjectId = "8pkoWzwlCG"
-        updateContentWithNextObjectId(rootObjectId)
-        PFUser.currentUser()?.fetchInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
-            if let error = error {
+        PFUser.currentUser()?.saveInBackground().continueWithSuccessBlock({ (task: BFTask) -> AnyObject? in
+            return PFUser.currentUser()?.fetchInBackground()
+        }).continueWithBlock({ (task: BFTask) -> AnyObject? in
+            if let error = task.error {
                 UIAlertController.showAlertWithError(error)
-            } else if let user = object as? PFUser {
+            } else if let user = task.result as? PFUser {
                 var username = NSLocalizedString("anonymous", comment: "")
                 if let remoteUsername = user["username"] as? String {
                     if !PFAnonymousUtils.isLinkedWithUser(user) {
@@ -46,7 +46,10 @@ class ViewController: UIViewController, UITextViewDelegate {
                 let likes = PFUser.getCurrentUserLikes()
                 let rankString = Ranks.getRankStringForLikes(likes)
                 self.centerBarButton.setTitle("\(username), \(rankString)(\(likes))", forState: .Normal)
+                let rootObjectId = "8pkoWzwlCG"
+                self.updateContentWithNextObjectId(rootObjectId)
             }
+            return nil
         })
     }
     
@@ -65,11 +68,29 @@ class ViewController: UIViewController, UITextViewDelegate {
         }
         let rankString = Ranks.getRankStringForLikes(likes.integerValue)
         self.authorLabel.text = NSLocalizedString("written_by", comment: "") + " \(userName), \(rankString)(\(likes))"
-//        if let user = PFUser.currentUser() {
-//            if owner.objectId! == user.objectId {
-//                likeButton.hidden = true
-//            }
-//        }
+
+        if let user = PFUser.currentUser() {
+            if node.owner.objectId! == user.objectId {
+                rightBarButto.hidden = true
+            }
+        }
+        rightBarButto.enabled = false
+        rightBarButto.backgroundColor = UIColor.getColorForTouchableArea()
+        if !rightBarButto.hidden {
+            let query = PFQuery(className: "Node")
+            query.whereKey("objectId", equalTo: node.objectId!)
+            query.whereKey("likesRelation", equalTo: PFUser.currentUser()!)
+            query.findObjectsInBackgroundWithBlock({ (results: [PFObject]?, error: NSError?) -> Void in
+                if let error = error {
+                    UIAlertController.showAlertWithError(error)
+                } else if results?.count > 0 {
+                    self.rightBarButto.backgroundColor = UIColor.getColorForAlreadyLiked()
+                } else {
+                    self.rightBarButto.enabled = true
+                }
+            })
+        }
+
     }
     
     func setWriteable() {
@@ -78,6 +99,9 @@ class ViewController: UIViewController, UITextViewDelegate {
         option2TextView.editable = true
         authorLabelHeightConstraint.constant = 0
         messageTextView.becomeFirstResponder()
+        rightBarButto.setTitle("save".localizedString, forState: .Normal)
+        rightBarButto.removeTarget(self, action: "touchLike:", forControlEvents: .TouchUpInside)
+        rightBarButto.addTarget(self, action: "touchSave:", forControlEvents: .TouchUpInside)
     }
     
     func setReadOnly() {
@@ -85,6 +109,9 @@ class ViewController: UIViewController, UITextViewDelegate {
         option1TextView.editable = false
         option2TextView.editable = false
         authorLabelHeightConstraint.constant = 21
+        rightBarButto.setTitle("like", forState: .Normal)
+        rightBarButto.removeTarget(self, action: "touchSave:", forControlEvents: .TouchUpInside)
+        rightBarButto.addTarget(self, action: "touchLike:", forControlEvents: .TouchUpInside)
     }
     
     override func viewDidLayoutSubviews() {
@@ -140,6 +167,27 @@ class ViewController: UIViewController, UITextViewDelegate {
     
     // MARK: - Actions
     
+    func touchLike(sender: UIButton) {
+        print("like")
+        if let node = currentNode {
+            PFCloud.callFunctionInBackground("like", withParameters: ["node": node.objectId!], block: { (result: AnyObject?, error: NSError?) -> Void in
+                if let error = error {
+                    sender.enabled = true
+                    UIAlertController.showAlertWithError(error)
+                } else {
+                    sender.enabled = false
+                    sender.backgroundColor = UIColor.getColorForAlreadyLiked()
+                }
+            })
+        }
+
+    }
+    
+    func touchSave(sender: AnyObject) {
+        print("save")
+        view.endEditing(true)
+    }
+    
     @IBAction func touchOption1(sender: AnyObject) {
         print("option1")
         if currentNode?.next1 == nil {
@@ -161,9 +209,5 @@ class ViewController: UIViewController, UITextViewDelegate {
             setReadOnly()
             updateContentWithNextObjectId(currentNode?.next2.objectId)
         }
-    }
-    
-    @IBAction func touchUpperRight(sender: AnyObject) {
-        view.endEditing(true)
     }
 }
