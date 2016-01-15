@@ -25,6 +25,7 @@ class ViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var rightBarButto: UIButton!
     
     private var currentNode: Node?
+    private var option1 = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,7 @@ class ViewController: UIViewController, UITextViewDelegate {
                 self.showAlertWithError(error)
             } else if let user = task.result as? PFUser {
                 self.updateAccountLabel(user)
+                // TODO rootObject should be from PFConfig
                 let rootObjectId = "8pkoWzwlCG"
                 self.updateContentWithNextObjectId(rootObjectId)
             }
@@ -186,6 +188,11 @@ class ViewController: UIViewController, UITextViewDelegate {
         })
     }
     
+    func onSavedNewStory() {
+        // TODO
+        // what should happen when the user saved a new part to the story.
+    }
+    
     // MARK: - Actions
     
     @IBAction func touchAccount(sender: AnyObject) {
@@ -306,12 +313,53 @@ class ViewController: UIViewController, UITextViewDelegate {
     }
     
     func touchSave(sender: AnyObject) {
+        if messageTextView.text != "" && option1TextView.text != "" && option2TextView.text != "" {
+            let object = PFObject(className: "Node")
+            object.setObject(messageTextView.text, forKey: "story")
+            object.setObject(option1TextView.text, forKey: "option1")
+            object.setObject(option2TextView.text, forKey: "option2")
+            object.setObject(PFUser.currentUser()!, forKey: "owner")
+            object.setObject("lang".localizedString, forKey: "lang")
+            object.saveInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in
+                if let error = error {
+                    self.showAlertWithError(error)
+                } else {
+                    if let node = self.currentNode {
+                        if self.option1 {
+                            node.setObject(object, forKey: "next1")
+                        } else {
+                            node.setObject(object, forKey: "next2")
+                        }
+                        node.saveInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in
+                            if let error = error {
+                                self.showAlertWithError(error)
+                            } else {
+                                self.onSavedNewStory()
+                            }
+                        })
+                    } else {
+                        self.onSavedNewStory()
+                    }
+                }
+            })
+        } else {
+            if messageTextView.text == "" {
+                messageTextView.shake()
+            }
+            if option1TextView.text == "" {
+                option1TextView.shake()
+            }
+            if option2TextView.text == "" {
+                option2TextView.shake()
+            }
+        }
         print("save")
         view.endEditing(true)
     }
     
     @IBAction func touchOption1(sender: AnyObject) {
         print("option1")
+        option1 = true
         if currentNode?.next1 == nil {
             setWriteable()
             updateContentWithPreview(currentNode?.story, choise: currentNode?.option1)
@@ -324,6 +372,7 @@ class ViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func touchOption2(sender: AnyObject) {
         print("option2")
+        option1 = false
         if currentNode?.next2 == nil {
             setWriteable()
             updateContentWithPreview(currentNode?.story, choise: currentNode?.option2)
