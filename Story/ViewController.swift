@@ -35,22 +35,26 @@ class ViewController: UIViewController, UITextViewDelegate {
             return PFUser.currentUser()?.fetchInBackground()
         }).continueWithBlock({ (task: BFTask) -> AnyObject? in
             if let error = task.error {
-                UIAlertController.showAlertWithError(error)
+                self.showAlertWithError(error)
             } else if let user = task.result as? PFUser {
-                var username = NSLocalizedString("anonymous", comment: "")
-                if let remoteUsername = user["username"] as? String {
-                    if !PFAnonymousUtils.isLinkedWithUser(user) {
-                        username = remoteUsername
-                    }
-                }
-                let likes = PFUser.getCurrentUserLikes()
-                let rankString = Ranks.getRankStringForLikes(likes)
-                self.centerBarButton.setTitle("\(username), \(rankString)(\(likes))", forState: .Normal)
+                self.updateAccountLabel(user)
                 let rootObjectId = "8pkoWzwlCG"
                 self.updateContentWithNextObjectId(rootObjectId)
             }
             return nil
         })
+    }
+    
+    func updateAccountLabel(user: PFUser) {
+        var username = NSLocalizedString("anonymous", comment: "")
+        if let remoteUsername = user["username"] as? String {
+            if !PFAnonymousUtils.isLinkedWithUser(user) {
+                username = remoteUsername
+            }
+        }
+        let likes = PFUser.getCurrentUserLikes()
+        let rankString = Ranks.getRankStringForLikes(likes)
+        self.centerBarButton.setTitle("\(username), \(rankString)(\(likes))", forState: .Normal)
     }
     
     func updateContentWithNode(node: Node) {
@@ -82,7 +86,7 @@ class ViewController: UIViewController, UITextViewDelegate {
             query.whereKey("likesRelation", equalTo: PFUser.currentUser()!)
             query.findObjectsInBackgroundWithBlock({ (results: [PFObject]?, error: NSError?) -> Void in
                 if let error = error {
-                    UIAlertController.showAlertWithError(error)
+                    self.showAlertWithError(error)
                 } else if results?.count > 0 {
                     self.rightBarButto.backgroundColor = UIColor.getColorForAlreadyLiked()
                 } else {
@@ -140,7 +144,7 @@ class ViewController: UIViewController, UITextViewDelegate {
             query.includeKey("owner")
             query.getFirstObjectInBackgroundWithBlock { (result: PFObject?, error: NSError?) -> Void in
                 if let error = error {
-                    UIAlertController.showAlertWithError(error)
+                    self.showAlertWithError(error)
                 } else if let result = result as? Node {
                     self.updateContentWithNode(result)
                 }
@@ -160,12 +164,130 @@ class ViewController: UIViewController, UITextViewDelegate {
         if let remoteChoise = choise {
             lChoise = remoteChoise
         }
-        messageTextView.placeholder = "Führe die Geschichte fort:\nLetzter Part: \(lStory)\nDeine Auswahl: \(lChoise)"
-        option1TextView.placeholder = "Trage Option 1 ein"
-        option2TextView.placeholder = "Trage Option 2 ein"
+        var messagePlaceholder = "message_placeholder".localizedString
+        messagePlaceholder = messagePlaceholder.stringByReplacingString("#story#", with: lStory)
+        messagePlaceholder = messagePlaceholder.stringByReplacingString("#choise#", with: lChoise)
+        messageTextView.placeholder = messagePlaceholder
+        option1TextView.placeholder = "option_1_placeholder".localizedString
+        option2TextView.placeholder = "option_2_placeholder".localizedString
+    }
+    
+    func shouldLogout() -> Bool {
+        return PFUser.currentUser()!.authenticated && !PFAnonymousUtils.isLinkedWithUser(PFUser.currentUser()!)
+    }
+    
+    func createAnonymousUserAndUpdate() {
+        PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+            if let error = error {
+                self.showAlertWithError(error)
+            } else {
+                self.updateAccountLabel(PFUser.currentUser()!)
+            }
+        })
     }
     
     // MARK: - Actions
+    
+    @IBAction func touchAccount(sender: AnyObject) {
+        var accountMessage = "account_anonymous_message".localizedString
+        if shouldLogout() {
+            accountMessage = "account_logged_in_message".localizedString
+        }
+        let alert = UIAlertController(title: "account_title".localizedString, message: accountMessage, preferredStyle: .Alert)
+        let loginAction = UIAlertAction(title: "account_login".localizedString, style: .Default) { (action: UIAlertAction) -> Void in
+            let loginAlert = UIAlertController(title: "login_title".localizedString, message: "login_message".localizedString, preferredStyle: .Alert)
+            loginAlert.addTextFieldWithConfigurationHandler({ (textField: UITextField) -> Void in
+                textField.placeholder = "enter_username_placeholder".localizedString
+            })
+            loginAlert.addTextFieldWithConfigurationHandler({ (textField: UITextField) -> Void in
+                textField.placeholder = "enter_password_placeholder".localizedString
+                textField.secureTextEntry = true
+            })
+            let registerAction = UIAlertAction(title: "login_button".localizedString, style: .Default, handler: { (action: UIAlertAction) -> Void in
+                let userNameTextField = loginAlert.textFields?.first
+                let passwordTextField = loginAlert.textFields?.last
+                var username = ""
+                if let textFieldUserName = userNameTextField?.text {
+                    username = textFieldUserName
+                }
+                var password = ""
+                if let textFieldPassword = passwordTextField!.text {
+                    password = textFieldPassword
+                }
+                self.login(username, password: password, completion: { (user: PFUser) -> () in
+                    self.updateAccountLabel(user)
+                })
+            })
+            let registerCancel = UIAlertAction(title: "register_cancel".localizedString, style: .Cancel, handler: nil)
+            loginAlert.addAction(registerAction)
+            loginAlert.addAction(registerCancel)
+            self.presentViewController(loginAlert, animated: true, completion: nil)
+        }
+        let registerAction = UIAlertAction(title: "account_register".localizedString, style: .Default) { (action: UIAlertAction) -> Void in
+            let registerAlert = UIAlertController(title: "register_title".localizedString, message: "register_message".localizedString, preferredStyle: .Alert)
+            registerAlert.addTextFieldWithConfigurationHandler({ (textField: UITextField) -> Void in
+                textField.placeholder = "enter_username_placeholder".localizedString
+            })
+            registerAlert.addTextFieldWithConfigurationHandler({ (textField: UITextField) -> Void in
+                textField.placeholder = "enter_password_placeholder".localizedString
+                textField.secureTextEntry = true
+            })
+            let registerAction = UIAlertAction(title: "register_button".localizedString, style: .Default, handler: { (action: UIAlertAction) -> Void in
+                let userNameTextField = registerAlert.textFields?.first
+                let passwordTextField = registerAlert.textFields?.last
+                if let user = PFUser.currentUser() {
+                    var username = ""
+                    if let textFieldUserName = userNameTextField?.text {
+                        username = textFieldUserName
+                    }
+                    var password = ""
+                    if let textFieldPassword = passwordTextField!.text {
+                        password = textFieldPassword
+                    }
+                    user.username = username
+                    user.password = password
+                    user.signUpInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in
+                        if let error = error {
+                            self.showAlertWithError(error)
+                        } else {
+                            self.login(username, password: password, completion: { (user: PFUser) -> () in
+                                self.updateAccountLabel(user)
+                            })
+                        }
+                    })
+                }
+            })
+            let registerCancel = UIAlertAction(title: "register_cancel".localizedString, style: .Cancel, handler: nil)
+            registerAlert.addAction(registerAction)
+            registerAlert.addAction(registerCancel)
+            self.presentViewController(registerAlert, animated: true, completion: nil)
+        }
+        let ranksAction = UIAlertAction(title: "account_show_ranks".localizedString, style: .Default) { (action: UIAlertAction) -> Void in
+            let ranksAlert = UIAlertController(title: "ranks_description".localizedString, message: Ranks.getRankDescription(), preferredStyle: .Alert)
+            let cancelAction = UIAlertAction(title: "ranks_cancel".localizedString, style: .Cancel, handler: nil)
+            ranksAlert.addAction(cancelAction)
+            self.presentViewController(ranksAlert, animated: true, completion: nil)
+        }
+        let logoutAction = UIAlertAction(title: "account_logout".localizedString, style: .Default) { (action: UIAlertAction) -> Void in
+            PFUser.logOutInBackgroundWithBlock({ (error: NSError?) -> Void in
+                if let error = error {
+                    self.showAlertWithError(error)
+                } else {
+                    self.createAnonymousUserAndUpdate()
+                }
+            })
+        }
+        let cancel = UIAlertAction(title: "account_cancel".localizedString, style: .Cancel, handler: nil)
+        if shouldLogout() {
+            alert.addAction(logoutAction)
+        } else {
+            alert.addAction(loginAction)
+            alert.addAction(registerAction)
+        }
+        alert.addAction(ranksAction)
+        alert.addAction(cancel)
+        presentViewController(alert, animated: true, completion: nil)
+    }
     
     func touchLike(sender: UIButton) {
         print("like")
@@ -173,7 +295,7 @@ class ViewController: UIViewController, UITextViewDelegate {
             PFCloud.callFunctionInBackground("like", withParameters: ["node": node.objectId!], block: { (result: AnyObject?, error: NSError?) -> Void in
                 if let error = error {
                     sender.enabled = true
-                    UIAlertController.showAlertWithError(error)
+                    self.showAlertWithError(error)
                 } else {
                     sender.enabled = false
                     sender.backgroundColor = UIColor.getColorForAlreadyLiked()
@@ -209,5 +331,15 @@ class ViewController: UIViewController, UITextViewDelegate {
             setReadOnly()
             updateContentWithNextObjectId(currentNode?.next2.objectId)
         }
+    }
+    
+    func login(username: String, password: String, completion: ((PFUser) -> ())?) {
+        PFUser.logInWithUsernameInBackground(username, password: password, block: { (user: PFUser?, error: NSError?) -> Void in
+            if let error = error {
+                self.showAlertWithError(error)
+            } else if let user = user {
+                completion?(user)
+            }
+        })
     }
 }

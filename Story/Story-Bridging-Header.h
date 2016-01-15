@@ -3,3 +3,4 @@
 //
 
 #import "SZTextView.h"
+#import "UIDevice+PlatformString.h"

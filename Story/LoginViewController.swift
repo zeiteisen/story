@@ -75,7 +75,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             user.signUpInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in
                 if let error = error {
                     self.enableButtons()
-                    UIAlertController.showAlertWithError(error)
+                    self.showAlertWithError(error)
                 } else {
                     self.login() // use this workaround to refresh the session when going from anonymous to normal user
                 }
@@ -87,7 +87,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         PFUser.logInWithUsernameInBackground(self.usernameInput.text!, password: self.passwordInput.text!, block: { (user: PFUser?, error: NSError?) -> Void in
             if let error = error {
                 self.enableButtons()
-                UIAlertController.showAlertWithError(error)
+                self.showAlertWithError(error)
             } else {
                 self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
             }

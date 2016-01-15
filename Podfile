@@ -9,6 +9,7 @@ pod 'UITextView+Placeholder'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'Parse'
+pod 'SwiftyUserDefaults'
 
 end
 

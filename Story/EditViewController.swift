@@ -97,7 +97,7 @@ class EditViewController: UIViewController, UITextViewDelegate, UIPickerViewData
                 if let error = error {
                     self.saveBarButton.enabled = true
                     self.saveButton.enabled = true
-                    UIAlertController.showAlertWithError(error)
+                    self.showAlertWithError(error)
                 } else {
                     if let node = self.node, option1 = self.option1 {
                         if option1 {
@@ -109,7 +109,7 @@ class EditViewController: UIViewController, UITextViewDelegate, UIPickerViewData
                             if let error = error {
                                 self.saveButton.enabled = false
                                 self.saveBarButton.enabled = false
-                                UIAlertController.showAlertWithError(error)
+                                self.showAlertWithError(error)
                             } else {
                                 self.navigationController?.popViewControllerAnimated(true)
                             }

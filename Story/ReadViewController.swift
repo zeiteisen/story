@@ -54,7 +54,7 @@ class ReadViewController: UIViewController {
             query.whereKey("likesRelation", equalTo: PFUser.currentUser()!)
             query.findObjectsInBackgroundWithBlock({ (results: [PFObject]?, error: NSError?) -> Void in
                 if let error = error {
-                    UIAlertController.showAlertWithError(error)
+                    self.showAlertWithError(error)
                 } else if results?.count > 0 {
                     self.likeButton.backgroundColor = UIColor.getColorForAlreadyLiked()
                 } else {
@@ -80,7 +80,7 @@ class ReadViewController: UIViewController {
             self.button2.enabled = true
             self.likeButton.enabled = true
             if let error = error {
-                UIAlertController.showAlertWithError(error)
+                self.showAlertWithError(error)
             } else if let results = results {
                 let next = results.first!
                 self.node = next
@@ -114,7 +114,7 @@ class ReadViewController: UIViewController {
             PFCloud.callFunctionInBackground("like", withParameters: ["node": nodeObjectId], block: { (result: AnyObject?, error: NSError?) -> Void in
                 if let error = error {
                     sender.enabled = true
-                    UIAlertController.showAlertWithError(error)
+                    self.showAlertWithError(error)
                 } else {
                     sender.enabled = false
                     sender.backgroundColor = UIColor.getColorForAlreadyLiked()
