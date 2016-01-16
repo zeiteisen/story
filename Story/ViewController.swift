@@ -10,8 +10,9 @@ import UIKit
 import Parse
 import UITextView_Placeholder
 
-class ViewController: UIViewController, UITextViewDelegate {
+class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var mainHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
@@ -23,9 +24,11 @@ class ViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var leftBarButton: UIButton!
     @IBOutlet weak var centerBarButton: UIButton!
     @IBOutlet weak var rightBarButto: UIButton!
+    @IBOutlet weak var tableView: UITableView!
     
     private var currentNode: Node?
     private var option1 = false
+    private var dataSource = [Bookmark]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,17 +37,43 @@ class ViewController: UIViewController, UITextViewDelegate {
         setReadOnly()
         PFUser.currentUser()?.saveInBackground().continueWithSuccessBlock({ (task: BFTask) -> AnyObject? in
             return PFUser.currentUser()?.fetchInBackground()
+        }).continueWithSuccessBlock({ (task: BFTask) -> AnyObject? in
+            let user = task.result as! PFUser
+            self.updateAccountLabel(user)
+            let bookmarkQuery = Bookmark.query()!
+            bookmarkQuery.whereKey("owner", equalTo: user)
+            return bookmarkQuery.findObjectsInBackground()
         }).continueWithBlock({ (task: BFTask) -> AnyObject? in
             if let error = task.error {
                 self.showAlertWithError(error)
-            } else if let user = task.result as? PFUser {
-                self.updateAccountLabel(user)
-                // TODO rootObject should be from PFConfig
-                let rootObjectId = "8pkoWzwlCG"
-                self.updateContentWithNextObjectId(rootObjectId)
+            } else if let bookmarks = task.result as? [Bookmark] {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.dataSource = bookmarks
+                    self.tableView.reloadData()
+                    self.updateContentWithNextObjectId(PFConfig.getRootObjectId())
+                })
             }
             return nil
         })
+        backButton.setTitle("back_button_title".localizedString, forState: .Normal)
+    }
+    
+    func goBack() {
+        if let node = currentNode {
+            let next1Query = PFQuery(className: "Node")
+            next1Query.whereKey("next1", equalTo: node)
+            let next2Query = PFQuery(className: "Node")
+            next2Query.whereKey("next2", equalTo: node)
+            let orQuery = PFQuery.orQueryWithSubqueries([next1Query, next2Query])
+            orQuery.includeKey("owner")
+            orQuery.getFirstObjectInBackgroundWithBlock({ (result: PFObject?, error: NSError?) -> Void in
+                if let _ = error {
+
+                } else if let backNode = result as? Node {
+                    self.updateContentWithNode(backNode)
+                }
+            })
+        }
     }
     
     func updateAccountLabel(user: PFUser) {
@@ -105,6 +134,8 @@ class ViewController: UIViewController, UITextViewDelegate {
         option2TextView.editable = true
         authorLabelHeightConstraint.constant = 0
         messageTextView.becomeFirstResponder()
+        rightBarButto.hidden = false
+        rightBarButto.enabled = true
         rightBarButto.setTitle("save".localizedString, forState: .Normal)
         rightBarButto.removeTarget(self, action: "touchLike:", forControlEvents: .TouchUpInside)
         rightBarButto.addTarget(self, action: "touchSave:", forControlEvents: .TouchUpInside)
@@ -188,12 +219,38 @@ class ViewController: UIViewController, UITextViewDelegate {
         })
     }
     
-    func onSavedNewStory() {
-        // TODO
-        // what should happen when the user saved a new part to the story.
+    func login(username: String, password: String, completion: ((PFUser) -> ())?) {
+        PFUser.logInWithUsernameInBackground(username, password: password, block: { (user: PFUser?, error: NSError?) -> Void in
+            if let error = error {
+                self.showAlertWithError(error)
+            } else if let user = user {
+                completion?(user)
+            }
+        })
     }
     
     // MARK: - Actions
+    @IBAction func touchBack(sender: AnyObject) {
+        if messageTextView.editable {
+            updateContentWithNode(currentNode!)
+            setReadOnly()
+        } else {
+            goBack()
+        }
+    }
+    
+    @IBAction func touchLeftBarButton(sender: AnyObject) {
+        if let node = currentNode {
+            let bookmark = Bookmark()
+            bookmark.node = node
+            bookmark.owner = PFUser.currentUser()!
+            bookmark.story = node.story
+            bookmark.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+                self.dataSource.append(bookmark)
+                self.tableView.reloadData()
+            })
+        }
+    }
     
     @IBAction func touchAccount(sender: AnyObject) {
         var accountMessage = "account_anonymous_message".localizedString
@@ -314,12 +371,12 @@ class ViewController: UIViewController, UITextViewDelegate {
     
     func touchSave(sender: AnyObject) {
         if messageTextView.text != "" && option1TextView.text != "" && option2TextView.text != "" {
-            let object = PFObject(className: "Node")
-            object.setObject(messageTextView.text, forKey: "story")
-            object.setObject(option1TextView.text, forKey: "option1")
-            object.setObject(option2TextView.text, forKey: "option2")
-            object.setObject(PFUser.currentUser()!, forKey: "owner")
-            object.setObject("lang".localizedString, forKey: "lang")
+            let object = Node()
+            object.story = messageTextView.text
+            object.option1 = option1TextView.text
+            object.option2 = option2TextView.text
+            object.owner = PFUser.currentUser()!
+            object.lang = "lang".localizedString
             object.saveInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in
                 if let error = error {
                     self.showAlertWithError(error)
@@ -334,11 +391,13 @@ class ViewController: UIViewController, UITextViewDelegate {
                             if let error = error {
                                 self.showAlertWithError(error)
                             } else {
-                                self.onSavedNewStory()
+                                self.updateContentWithNode(object)
+                                self.setReadOnly()
                             }
                         })
                     } else {
-                        self.onSavedNewStory()
+                        self.updateContentWithNode(object)
+                        self.setReadOnly()
                     }
                 }
             })
@@ -358,7 +417,6 @@ class ViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func touchOption1(sender: AnyObject) {
-        print("option1")
         option1 = true
         if currentNode?.next1 == nil {
             setWriteable()
@@ -371,7 +429,6 @@ class ViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func touchOption2(sender: AnyObject) {
-        print("option2")
         option1 = false
         if currentNode?.next2 == nil {
             setWriteable()
@@ -382,13 +439,22 @@ class ViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    func login(username: String, password: String, completion: ((PFUser) -> ())?) {
-        PFUser.logInWithUsernameInBackground(username, password: password, block: { (user: PFUser?, error: NSError?) -> Void in
-            if let error = error {
-                self.showAlertWithError(error)
-            } else if let user = user {
-                completion?(user)
-            }
-        })
+    // MARK: - TableViewDataSource
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let bookmark = dataSource[indexPath.row]
+        updateContentWithNextObjectId(bookmark.node.objectId)
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let bookmark = dataSource[indexPath.row]
+        cell.textLabel?.text = bookmark.story
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSource.count
     }
 }

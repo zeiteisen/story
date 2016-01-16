@@ -13,9 +13,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Fabric.with([Crashlytics.self])
         Node.registerSubclass()
-        Parse.setApplicationId("tYaXvqvvAL6m7MNV7LaQHtfaLA6lRA4k8GC0YeNf",
-            clientKey: "FcfuSPC52NViKYczt3pv5dWDkhWLkOB5j5YyYTwI")
+        Bookmark.registerSubclass()
+        #if DEBUG
+        Parse.setApplicationId("GKPnDrd9E4q8wXwBwDFtITTOuZIAHNUF5zZaRzW1", clientKey: "wvnn8xyYzgF5tACLS9GVsIxPsPpcaDtEIjEHZskH")
+        #else
+        Parse.setApplicationId("tYaXvqvvAL6m7MNV7LaQHtfaLA6lRA4k8GC0YeNf", clientKey: "FcfuSPC52NViKYczt3pv5dWDkhWLkOB5j5YyYTwI")
+        #endif
         PFUser.enableAutomaticUser()
+        PFConfig.getConfigInBackground()
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         return true
     }
