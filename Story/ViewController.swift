@@ -29,6 +29,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     private var currentNode: Node?
     private var option1 = false
     private var dataSource = [Bookmark]()
+    private var firstLayout = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +40,9 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
             return PFUser.currentUser()?.fetchInBackground()
         }).continueWithSuccessBlock({ (task: BFTask) -> AnyObject? in
             let user = task.result as! PFUser
-            self.updateAccountLabel(user)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.updateAccountLabel(user)
+            })
             let bookmarkQuery = Bookmark.query()!
             bookmarkQuery.whereKey("owner", equalTo: user)
             return bookmarkQuery.findObjectsInBackground()
@@ -53,6 +56,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                     self.updateContentWithNextObjectId(PFConfig.getRootObjectId())
                 })
             }
+            self.scrollView.setContentOffset(CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentSize.height - self.scrollView.bounds.size.height), animated: true)
             return nil
         })
         backButton.setTitle("back_button_title".localizedString, forState: .Normal)
@@ -67,13 +71,22 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
             let orQuery = PFQuery.orQueryWithSubqueries([next1Query, next2Query])
             orQuery.includeKey("owner")
             orQuery.getFirstObjectInBackgroundWithBlock({ (result: PFObject?, error: NSError?) -> Void in
-                if let _ = error {
-
+                if let error = error {
+                    self.showAlertWithError(error)
                 } else if let backNode = result as? Node {
                     self.updateContentWithNode(backNode)
                 }
             })
         }
+    }
+    
+    func alreadyBookmarked(node: Node) -> Bool {
+        for bookmark in dataSource {
+            if node.objectId == bookmark.node.objectId {
+                return true
+            }
+        }
+        return false
     }
     
     func updateAccountLabel(user: PFUser) {
@@ -89,10 +102,11 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     }
     
     func updateContentWithNode(node: Node) {
-        self.currentNode = node
-        self.messageTextView.text = node.story
-        self.option1TextView.text = node.option1
-        self.option2TextView.text = node.option2
+        setReadOnly()
+        currentNode = node
+        messageTextView.text = node.story
+        option1TextView.text = node.option1
+        option2TextView.text = node.option2
         var userName = NSLocalizedString("unknown", comment: "")
         if let realUserName = node.owner["username"] as? String {
             userName = realUserName
@@ -107,10 +121,11 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
         if let user = PFUser.currentUser() {
             if node.owner.objectId! == user.objectId {
                 rightBarButto.hidden = true
+            } else {
+                rightBarButto.hidden = false
             }
         }
         rightBarButto.enabled = false
-        rightBarButto.backgroundColor = UIColor.getColorForTouchableArea()
         if !rightBarButto.hidden {
             let query = PFQuery(className: "Node")
             query.whereKey("objectId", equalTo: node.objectId!)
@@ -119,13 +134,22 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                 if let error = error {
                     self.showAlertWithError(error)
                 } else if results?.count > 0 {
-                    self.rightBarButto.backgroundColor = UIColor.getColorForAlreadyLiked()
+                    self.rightBarButto.enabled = false
                 } else {
                     self.rightBarButto.enabled = true
                 }
             })
         }
-
+        if node.objectId == PFConfig.getRootObjectId() {
+            backButton.enabled = false
+        } else {
+            backButton.enabled = true
+        }
+        if alreadyBookmarked(node) {
+            leftBarButton.enabled = false
+        } else {
+            leftBarButton.enabled = true
+        }
     }
     
     func setWriteable() {
@@ -136,9 +160,10 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
         messageTextView.becomeFirstResponder()
         rightBarButto.hidden = false
         rightBarButto.enabled = true
-        rightBarButto.setTitle("save".localizedString, forState: .Normal)
+        rightBarButto.setBackgroundImage(UIImage(named: "save"), forState: .Normal)
         rightBarButto.removeTarget(self, action: "touchLike:", forControlEvents: .TouchUpInside)
         rightBarButto.addTarget(self, action: "touchSave:", forControlEvents: .TouchUpInside)
+        leftBarButton.enabled = false
     }
     
     func setReadOnly() {
@@ -146,14 +171,26 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
         option1TextView.editable = false
         option2TextView.editable = false
         authorLabelHeightConstraint.constant = 21
-        rightBarButto.setTitle("like", forState: .Normal)
+        rightBarButto.setBackgroundImage(UIImage(named: "like"), forState: .Normal)
         rightBarButto.removeTarget(self, action: "touchSave:", forControlEvents: .TouchUpInside)
         rightBarButto.addTarget(self, action: "touchLike:", forControlEvents: .TouchUpInside)
+        updateBookmarkButton()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        scrollView.setContentOffset(CGPointMake(scrollView.contentOffset.x, scrollView.contentSize.height - scrollView.bounds.size.height), animated: false)
+        if firstLayout {
+
+            firstLayout = false
+        }
+    }
+    
+    func updateBookmarkButton() {
+        if let node = currentNode {
+            if !alreadyBookmarked(node) {
+                leftBarButton.enabled = true
+            }
+        }
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -171,6 +208,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     }
     
     func updateContentWithNextObjectId(nextObjectId: String?) {
+        setReadOnly()
         if let next = nextObjectId {
             let query = PFQuery(className: "Node")
             query.whereKey("objectId", equalTo: next)
@@ -186,6 +224,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     }
     
     func updateContentWithPreview(story: String?, choise: String?) {
+        setWriteable()
         messageTextView.text = ""
         option1TextView.text = ""
         option2TextView.text = ""
@@ -209,11 +248,12 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
         return PFUser.currentUser()!.authenticated && !PFAnonymousUtils.isLinkedWithUser(PFUser.currentUser()!)
     }
     
-    func createAnonymousUserAndUpdate() {
+    func createAnonymousUserAndUpdate(completion: () -> ()) {
         PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
             if let error = error {
                 self.showAlertWithError(error)
             } else {
+                completion()
                 self.updateAccountLabel(PFUser.currentUser()!)
             }
         })
@@ -233,7 +273,6 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     @IBAction func touchBack(sender: AnyObject) {
         if messageTextView.editable {
             updateContentWithNode(currentNode!)
-            setReadOnly()
         } else {
             goBack()
         }
@@ -248,6 +287,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
             bookmark.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
                 self.dataSource.append(bookmark)
                 self.tableView.reloadData()
+                self.leftBarButton.enabled = false
             })
         }
     }
@@ -280,6 +320,9 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                 }
                 self.login(username, password: password, completion: { (user: PFUser) -> () in
                     self.updateAccountLabel(user)
+                    if let node = self.currentNode {
+                        self.updateContentWithNode(node)
+                    }
                 })
             })
             let registerCancel = UIAlertAction(title: "register_cancel".localizedString, style: .Cancel, handler: nil)
@@ -316,6 +359,9 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                         } else {
                             self.login(username, password: password, completion: { (user: PFUser) -> () in
                                 self.updateAccountLabel(user)
+                                if let node = self.currentNode {
+                                    self.updateContentWithNode(node)
+                                }
                             })
                         }
                     })
@@ -337,7 +383,11 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                 if let error = error {
                     self.showAlertWithError(error)
                 } else {
-                    self.createAnonymousUserAndUpdate()
+                    self.createAnonymousUserAndUpdate({ () -> () in
+                        if let node = self.currentNode {
+                            self.updateContentWithNode(node)
+                        }
+                    })
                 }
             })
         }
@@ -392,12 +442,10 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                                 self.showAlertWithError(error)
                             } else {
                                 self.updateContentWithNode(object)
-                                self.setReadOnly()
                             }
                         })
                     } else {
                         self.updateContentWithNode(object)
-                        self.setReadOnly()
                     }
                 }
             })
@@ -419,10 +467,8 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     @IBAction func touchOption1(sender: AnyObject) {
         option1 = true
         if currentNode?.next1 == nil {
-            setWriteable()
             updateContentWithPreview(currentNode?.story, choise: currentNode?.option1)
         } else {
-            setReadOnly()
             updateContentWithNextObjectId(currentNode?.next1.objectId)
         }
 
@@ -431,15 +477,33 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     @IBAction func touchOption2(sender: AnyObject) {
         option1 = false
         if currentNode?.next2 == nil {
-            setWriteable()
             updateContentWithPreview(currentNode?.story, choise: currentNode?.option2)
         } else {
-            setReadOnly()
             updateContentWithNextObjectId(currentNode?.next2.objectId)
         }
     }
     
     // MARK: - TableViewDataSource
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            print("delete")
+            let bookmark = dataSource[indexPath.row]
+            bookmark.deleteInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+                if let error = error {
+                    self.showAlertWithError(error)
+                } else {
+                    self.dataSource.removeAtIndex(indexPath.row)
+                    self.tableView.reloadData()
+                    self.updateBookmarkButton()
+                }
+            })
+        }
+    }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -448,9 +512,9 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! BookmarkCell
         let bookmark = dataSource[indexPath.row]
-        cell.textLabel?.text = bookmark.story
+        cell.label.text = bookmark.story
         return cell
     }
     

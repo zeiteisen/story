@@ -11,6 +11,8 @@
 		87CF45C30B9D6B739C6D413E /* Pods_StoryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A33AE9BE45C60232CE38C2BE /* Pods_StoryTests.framework */; };
 		FC4888491C4A49380084E5EE /* PFConfig+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4888481C4A49380084E5EE /* PFConfig+Defaults.swift */; };
 		FC48884B1C4AA6430084E5EE /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC48884A1C4AA6430084E5EE /* Bookmark.swift */; };
+		FC48884D1C4AC0D20084E5EE /* NSObject+Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC48884C1C4AC0D20084E5EE /* NSObject+Delay.swift */; };
+		FC48884F1C4AF2590084E5EE /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC48884E1C4AF2590084E5EE /* BookmarkCell.swift */; };
 		FC4AEAF01C48564900BB1003 /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AEAEF1C48564900BB1003 /* String+Localized.swift */; };
 		FC6E3DE11B6804DF00D651CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6E3DE01B6804DF00D651CF /* AppDelegate.swift */; };
 		FC6E3DE31B6804DF00D651CF /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6E3DE21B6804DF00D651CF /* MasterViewController.swift */; };
@@ -70,6 +72,8 @@
 		CDB60AE5FA7A7CF3C410C299 /* Pods-StoryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoryTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StoryTests/Pods-StoryTests.debug.xcconfig"; sourceTree = "<group>"; };
 		FC4888481C4A49380084E5EE /* PFConfig+Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFConfig+Defaults.swift"; sourceTree = "<group>"; };
 		FC48884A1C4AA6430084E5EE /* Bookmark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
+		FC48884C1C4AC0D20084E5EE /* NSObject+Delay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Delay.swift"; sourceTree = "<group>"; };
+		FC48884E1C4AF2590084E5EE /* BookmarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
 		FC4AEAEF1C48564900BB1003 /* String+Localized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
 		FC6E3DDB1B6804DF00D651CF /* Story.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Story.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC6E3DDF1B6804DF00D651CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -167,6 +171,7 @@
 				FC9BCC9D1B6D626900806A71 /* UIViewController+SimpleAlert.swift */,
 				FC4AEAEF1C48564900BB1003 /* String+Localized.swift */,
 				FC4888481C4A49380084E5EE /* PFConfig+Defaults.swift */,
+				FC48884C1C4AC0D20084E5EE /* NSObject+Delay.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -202,6 +207,7 @@
 				FCAD64AC1C47D86B00CDB9CB /* ViewControllers */,
 				FC89B5C91B69746E0037ABE5 /* ObjC */,
 				FC6E3DE01B6804DF00D651CF /* AppDelegate.swift */,
+				FC48884E1C4AF2590084E5EE /* BookmarkCell.swift */,
 				FC89B5CE1B69760A0037ABE5 /* LoginViewController.swift */,
 				FC89B5C31B696A9A0037ABE5 /* EditViewController.swift */,
 				FC6E3DE21B6804DF00D651CF /* MasterViewController.swift */,
@@ -518,6 +524,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC48884D1C4AC0D20084E5EE /* NSObject+Delay.swift in Sources */,
 				FCAD64AE1C47D87A00CDB9CB /* ViewController.swift in Sources */,
 				FC48884B1C4AA6430084E5EE /* Bookmark.swift in Sources */,
 				FCE54CD41B6ABB0E00E3612B /* SmartButton.swift in Sources */,
@@ -528,6 +535,7 @@
 				FC89B5CF1B69760A0037ABE5 /* LoginViewController.swift in Sources */,
 				FCA1FA011B6E52E000E32582 /* UIView+Shake.swift in Sources */,
 				FC89B5C41B696A9A0037ABE5 /* EditViewController.swift in Sources */,
+				FC48884F1C4AF2590084E5EE /* BookmarkCell.swift in Sources */,
 				FCA1F9FB1B6E462700E32582 /* PFUser+Data.swift in Sources */,
 				FCE424F71B6CEECE00D3B922 /* UIColor+Theme.swift in Sources */,
 				FCA1F9F71B6E2E2700E32582 /* Ranks.swift in Sources */,
