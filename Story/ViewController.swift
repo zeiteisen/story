@@ -9,11 +9,13 @@
 import UIKit
 import Parse
 import UITextView_Placeholder
+import MBProgressHUD
 
 class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var mainHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var upperHalfHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageTextView: UITextView!
@@ -31,7 +33,6 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     private var currentNode: Node?
     private var option1 = false
     private var dataSource = [Bookmark]()
-    private var firstLayout = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,11 +43,21 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
         centerBarButton.setTitle("", forState: .Normal)
         tableView.tableFooterView = UIView(frame: CGRectZero)
         bookmarkTitleLabel.text = "bookmark_title".localizedString
-        mainHeightConstraint.constant = UIScreen.mainScreen().bounds.height
+        setupHeightConstraints(UIScreen.mainScreen().bounds.size)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillChangeFrameNotification, object: nil)
         setReadOnly()
         updateUserState()
         backButton.setTitle("back_button_title".localizedString, forState: .Normal)
+    }
+    
+    func setupHeightConstraints(size: CGSize) {
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            let upper = size.height / 3.0
+            upperHalfHeightConstraint.constant = upper
+            mainHeightConstraint.constant = size.height - upper
+        } else {
+            mainHeightConstraint.constant = size.height
+        }
     }
     
     func updateUserState() {
@@ -195,19 +206,15 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
         messageTextView.editable = false
         option1TextView.editable = false
         option2TextView.editable = false
-        authorLabelHeightConstraint.constant = 21
+        var offset: CGFloat = 21
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            offset = 35
+        }
+        authorLabelHeightConstraint.constant = offset
         rightBarButto.setBackgroundImage(UIImage(named: "like"), forState: .Normal)
         rightBarButto.removeTarget(self, action: "touchSave:", forControlEvents: .TouchUpInside)
         rightBarButto.addTarget(self, action: "touchLike:", forControlEvents: .TouchUpInside)
         updateBookmarkButton()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if firstLayout {
-
-            firstLayout = false
-        }
     }
     
     func updateBookmarkButton() {
@@ -219,7 +226,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        mainHeightConstraint.constant = size.height
+        setupHeightConstraints(size)
         view.layoutIfNeeded()
     }
     
@@ -229,6 +236,14 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
             let keyboardHeight = screenHeight - keyboardFrame.origin.y
             mainHeightConstraint.constant = UIScreen.mainScreen().bounds.height - keyboardHeight
             bottomConstraint.constant = keyboardHeight
+            if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+                delay(0.3) {
+                    self.scrollView.setContentOffset(CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentSize.height - self.scrollView.bounds.size.height), animated: true)
+                }
+                if keyboardHeight == 0 {
+                    setupHeightConstraints(UIScreen.mainScreen().bounds.size)
+                }
+            }
         }
     }
     
@@ -238,7 +253,9 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
             let query = PFQuery(className: "Node")
             query.whereKey("objectId", equalTo: next)
             query.includeKey("owner")
+            MBProgressHUD.showHUDAddedTo(view, animated: true)
             query.getFirstObjectInBackgroundWithBlock { (result: PFObject?, error: NSError?) -> Void in
+                MBProgressHUD.hideHUDForView(self.view, animated: true)
                 if let error = error {
                     self.showAlertWithError(error)
                 } else if let result = result as? Node {
@@ -313,17 +330,22 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
             bookmark.story = node.story
             self.leftBarButton.enabled = false
             bookmark.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    self.scrollView.contentOffset = CGPointMake(0, self.tableView.frame.origin.y + 16)
-                    }, completion: { (finished: Bool) -> Void in
-                        self.delay(0.3) {
-                            self.dataSource.append(bookmark)
-                            self.tableView.reloadData()
-                            self.delay(0.7) {
-                                self.scrollView.setContentOffset(CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentSize.height - self.scrollView.bounds.size.height), animated: true)
+                if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+                    self.dataSource.append(bookmark)
+                    self.tableView.reloadData()
+                } else {
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.scrollView.contentOffset = CGPointMake(0, self.tableView.frame.origin.y + 16)
+                        }, completion: { (finished: Bool) -> Void in
+                            self.delay(0.3) {
+                                self.dataSource.append(bookmark)
+                                self.tableView.reloadData()
+                                self.delay(0.7) {
+                                    self.scrollView.setContentOffset(CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentSize.height - self.scrollView.bounds.size.height), animated: true)
+                                }
                             }
-                        }
-                })
+                    })
+                }
             })
         }
     }
@@ -560,6 +582,8 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! BookmarkCell
+        cell.backgroundColor = UIColor.clearColor()
+        cell.contentView.backgroundColor = UIColor.clearColor()
         let bookmark = dataSource[indexPath.row]
         cell.label.text = bookmark.story
         let depth = bookmark.node.depth
@@ -579,7 +603,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            return 100
+            return 80
         } else {
             return 60
         }

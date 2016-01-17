@@ -85,12 +85,14 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Story/Bolts.framework"
+  install_framework "Pods-Story/MBProgressHUD.framework"
   install_framework "Pods-Story/Parse.framework"
   install_framework "Pods-Story/SwiftyUserDefaults.framework"
   install_framework "Pods-Story/UITextView_Placeholder.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Story/Bolts.framework"
+  install_framework "Pods-Story/MBProgressHUD.framework"
   install_framework "Pods-Story/Parse.framework"
   install_framework "Pods-Story/SwiftyUserDefaults.framework"
   install_framework "Pods-Story/UITextView_Placeholder.framework"

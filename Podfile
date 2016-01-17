@@ -10,6 +10,7 @@ pod 'Fabric'
 pod 'Crashlytics'
 pod 'Parse'
 pod 'SwiftyUserDefaults'
+pod 'MBProgressHUD', '~> 0.9'
 
 end
 

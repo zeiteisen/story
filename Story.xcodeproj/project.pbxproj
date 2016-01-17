@@ -15,7 +15,6 @@
 		FC48884F1C4AF2590084E5EE /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC48884E1C4AF2590084E5EE /* BookmarkCell.swift */; };
 		FC4AEAF01C48564900BB1003 /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AEAEF1C48564900BB1003 /* String+Localized.swift */; };
 		FC6E3DE11B6804DF00D651CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6E3DE01B6804DF00D651CF /* AppDelegate.swift */; };
-		FC6E3DE31B6804DF00D651CF /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6E3DE21B6804DF00D651CF /* MasterViewController.swift */; };
 		FC6E3DE81B6804DF00D651CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC6E3DE61B6804DF00D651CF /* Main.storyboard */; };
 		FC6E3DEA1B6804DF00D651CF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC6E3DE91B6804DF00D651CF /* Images.xcassets */; };
 		FC6E3DED1B6804DF00D651CF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC6E3DEB1B6804DF00D651CF /* LaunchScreen.xib */; };
@@ -30,17 +29,13 @@
 		FC6E3E141B6805E300D651CF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC6E3E131B6805E300D651CF /* SystemConfiguration.framework */; };
 		FC6E3E161B6805EB00D651CF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FC6E3E151B6805EB00D651CF /* libz.dylib */; };
 		FC6E3E181B6805F300D651CF /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FC6E3E171B6805F300D651CF /* libsqlite3.dylib */; };
-		FC89B5C41B696A9A0037ABE5 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89B5C31B696A9A0037ABE5 /* EditViewController.swift */; };
 		FC89B5C61B696C8C0037ABE5 /* Color Pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = FC89B5C51B696C8C0037ABE5 /* Color Pattern.png */; };
 		FC89B5C81B696DCD0037ABE5 /* Blue Palette.png in Resources */ = {isa = PBXBuildFile; fileRef = FC89B5C71B696DCD0037ABE5 /* Blue Palette.png */; };
 		FC89B5CD1B6974790037ABE5 /* SZTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC89B5CC1B6974790037ABE5 /* SZTextView.m */; };
-		FC89B5CF1B69760A0037ABE5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89B5CE1B69760A0037ABE5 /* LoginViewController.swift */; };
-		FC89B5D11B697D940037ABE5 /* ReadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89B5D01B697D940037ABE5 /* ReadViewController.swift */; };
 		FC9160831C4951C300908E71 /* UIDevice+PlatformString.m in Sources */ = {isa = PBXBuildFile; fileRef = FC9160821C4951C300908E71 /* UIDevice+PlatformString.m */; };
 		FC9160851C49520800908E71 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9160841C49520800908E71 /* Reachability.swift */; };
 		FC9160871C49580400908E71 /* String+Replacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9160861C49580400908E71 /* String+Replacing.swift */; };
 		FC9BCC9E1B6D626900806A71 /* UIViewController+SimpleAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9BCC9D1B6D626900806A71 /* UIViewController+SimpleAlert.swift */; };
-		FC9BCCA01B6D6AE100806A71 /* RanksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9BCC9F1B6D6AE100806A71 /* RanksViewController.swift */; };
 		FCA1F9F71B6E2E2700E32582 /* Ranks.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA1F9F61B6E2E2700E32582 /* Ranks.swift */; };
 		FCA1F9F91B6E317000E32582 /* Ranks.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCA1F9F81B6E317000E32582 /* Ranks.plist */; };
 		FCA1F9FB1B6E462700E32582 /* PFUser+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA1F9FA1B6E462700E32582 /* PFUser+Data.swift */; };
@@ -50,7 +45,6 @@
 		FCAD64B11C47ECFE00CDB9CB /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAD64B01C47ECFE00CDB9CB /* Node.swift */; };
 		FCE424F71B6CEECE00D3B922 /* UIColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE424F61B6CEECE00D3B922 /* UIColor+Theme.swift */; };
 		FCE54CD41B6ABB0E00E3612B /* SmartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE54CD31B6ABB0E00E3612B /* SmartButton.swift */; };
-		FCF1048A1B6C0D60008E88D2 /* TeaserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF104891B6C0D60008E88D2 /* TeaserCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,7 +72,6 @@
 		FC6E3DDB1B6804DF00D651CF /* Story.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Story.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC6E3DDF1B6804DF00D651CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC6E3DE01B6804DF00D651CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FC6E3DE21B6804DF00D651CF /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		FC6E3DE71B6804DF00D651CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FC6E3DE91B6804DF00D651CF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FC6E3DEC1B6804DF00D651CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -95,20 +88,16 @@
 		FC6E3E131B6805E300D651CF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		FC6E3E151B6805EB00D651CF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		FC6E3E171B6805F300D651CF /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		FC89B5C31B696A9A0037ABE5 /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		FC89B5C51B696C8C0037ABE5 /* Color Pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Color Pattern.png"; sourceTree = "<group>"; };
 		FC89B5C71B696DCD0037ABE5 /* Blue Palette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Blue Palette.png"; sourceTree = "<group>"; };
 		FC89B5CA1B6974780037ABE5 /* Story-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Story-Bridging-Header.h"; sourceTree = "<group>"; };
 		FC89B5CB1B6974790037ABE5 /* SZTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZTextView.h; sourceTree = "<group>"; };
 		FC89B5CC1B6974790037ABE5 /* SZTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZTextView.m; sourceTree = "<group>"; };
-		FC89B5CE1B69760A0037ABE5 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		FC89B5D01B697D940037ABE5 /* ReadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadViewController.swift; sourceTree = "<group>"; };
 		FC9160811C4951C300908E71 /* UIDevice+PlatformString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+PlatformString.h"; sourceTree = "<group>"; };
 		FC9160821C4951C300908E71 /* UIDevice+PlatformString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+PlatformString.m"; sourceTree = "<group>"; };
 		FC9160841C49520800908E71 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		FC9160861C49580400908E71 /* String+Replacing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Replacing.swift"; sourceTree = "<group>"; };
 		FC9BCC9D1B6D626900806A71 /* UIViewController+SimpleAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+SimpleAlert.swift"; sourceTree = "<group>"; };
-		FC9BCC9F1B6D6AE100806A71 /* RanksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RanksViewController.swift; sourceTree = "<group>"; };
 		FCA1F9F61B6E2E2700E32582 /* Ranks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ranks.swift; sourceTree = "<group>"; };
 		FCA1F9F81B6E317000E32582 /* Ranks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Ranks.plist; sourceTree = "<group>"; };
 		FCA1F9FA1B6E462700E32582 /* PFUser+Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFUser+Data.swift"; sourceTree = "<group>"; };
@@ -120,7 +109,6 @@
 		FCAD64B01C47ECFE00CDB9CB /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		FCE424F61B6CEECE00D3B922 /* UIColor+Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
 		FCE54CD31B6ABB0E00E3612B /* SmartButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartButton.swift; sourceTree = "<group>"; };
-		FCF104891B6C0D60008E88D2 /* TeaserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaserCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,18 +196,12 @@
 				FC89B5C91B69746E0037ABE5 /* ObjC */,
 				FC6E3DE01B6804DF00D651CF /* AppDelegate.swift */,
 				FC48884E1C4AF2590084E5EE /* BookmarkCell.swift */,
-				FC89B5CE1B69760A0037ABE5 /* LoginViewController.swift */,
-				FC89B5C31B696A9A0037ABE5 /* EditViewController.swift */,
-				FC6E3DE21B6804DF00D651CF /* MasterViewController.swift */,
 				FC6E3DE61B6804DF00D651CF /* Main.storyboard */,
-				FCF104891B6C0D60008E88D2 /* TeaserCell.swift */,
 				FCE424F61B6CEECE00D3B922 /* UIColor+Theme.swift */,
-				FC9BCC9F1B6D6AE100806A71 /* RanksViewController.swift */,
 				FCA1F9F61B6E2E2700E32582 /* Ranks.swift */,
 				FCA1FA001B6E52E000E32582 /* UIView+Shake.swift */,
 				FCA1F9F81B6E317000E32582 /* Ranks.plist */,
 				FCA1F9FA1B6E462700E32582 /* PFUser+Data.swift */,
-				FC89B5D01B697D940037ABE5 /* ReadViewController.swift */,
 				FCE54CD31B6ABB0E00E3612B /* SmartButton.swift */,
 				FC9160841C49520800908E71 /* Reachability.swift */,
 				FC6E3DE91B6804DF00D651CF /* Images.xcassets */,
@@ -532,22 +514,16 @@
 				FC9BCC9E1B6D626900806A71 /* UIViewController+SimpleAlert.swift in Sources */,
 				FC9160871C49580400908E71 /* String+Replacing.swift in Sources */,
 				FC9160831C4951C300908E71 /* UIDevice+PlatformString.m in Sources */,
-				FC89B5CF1B69760A0037ABE5 /* LoginViewController.swift in Sources */,
 				FCA1FA011B6E52E000E32582 /* UIView+Shake.swift in Sources */,
-				FC89B5C41B696A9A0037ABE5 /* EditViewController.swift in Sources */,
 				FC48884F1C4AF2590084E5EE /* BookmarkCell.swift in Sources */,
 				FCA1F9FB1B6E462700E32582 /* PFUser+Data.swift in Sources */,
 				FCE424F71B6CEECE00D3B922 /* UIColor+Theme.swift in Sources */,
 				FCA1F9F71B6E2E2700E32582 /* Ranks.swift in Sources */,
 				FC4888491C4A49380084E5EE /* PFConfig+Defaults.swift in Sources */,
 				FC89B5CD1B6974790037ABE5 /* SZTextView.m in Sources */,
-				FC6E3DE31B6804DF00D651CF /* MasterViewController.swift in Sources */,
 				FC4AEAF01C48564900BB1003 /* String+Localized.swift in Sources */,
 				FCAD64B11C47ECFE00CDB9CB /* Node.swift in Sources */,
-				FC9BCCA01B6D6AE100806A71 /* RanksViewController.swift in Sources */,
-				FC89B5D11B697D940037ABE5 /* ReadViewController.swift in Sources */,
 				FC6E3DE11B6804DF00D651CF /* AppDelegate.swift in Sources */,
-				FCF1048A1B6C0D60008E88D2 /* TeaserCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
