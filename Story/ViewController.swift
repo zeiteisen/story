@@ -200,6 +200,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
         rightBarButto.removeTarget(self, action: "touchLike:", forControlEvents: .TouchUpInside)
         rightBarButto.addTarget(self, action: "touchSave:", forControlEvents: .TouchUpInside)
         leftBarButton.enabled = false
+        backButton.enabled = true
     }
     
     func setReadOnly() {

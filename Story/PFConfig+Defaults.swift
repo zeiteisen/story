@@ -10,16 +10,24 @@ import Parse
 
 extension PFConfig {
     class func getRootObjectId() -> String {
+        let lang = "lang".localizedString
         if let value = PFConfig.currentConfig()["RootObjectId"] as? [String : String] {
-            let lang = "lang".localizedString
             if let rootObjectId = value[lang] {
                 return rootObjectId
             }
         }
         #if DEBUG
-            return "SQ67sfwZrD"
+            if lang == "de" {
+                return "SQ67sfwZrD"
+            } else {
+                return "Oa25IUqNYv"
+            }
         #else
-            return "8pkoWzwlCG"
+            if lang == "de" {
+                return "0SHz50rDVY"
+            } else {
+                return "e8ZnI2tWtY"
+            }
         #endif
     }
 }
