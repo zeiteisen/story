@@ -19,6 +19,7 @@ class Node: PFObject, PFSubclassing {
     @NSManaged var next2: Node
     @NSManaged var likeRelation: PFRelation
     @NSManaged var lang: String
+    @NSManaged var depth: NSNumber
     
     override class func initialize() {
         struct Static {

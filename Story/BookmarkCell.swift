@@ -11,16 +11,11 @@ import UIKit
 class BookmarkCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var subTitle: UILabel!
+    @IBOutlet weak var styleView: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        styleView.layer.cornerRadius = 10
     }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

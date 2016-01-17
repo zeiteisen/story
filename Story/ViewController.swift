@@ -25,6 +25,8 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     @IBOutlet weak var centerBarButton: UIButton!
     @IBOutlet weak var rightBarButto: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var bookmarkTitleLabel: UILabel!
+    @IBOutlet weak var navigationView: UIView!
     
     private var currentNode: Node?
     private var option1 = false
@@ -33,9 +35,21 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        messageTextView.text = ""
+        option1TextView.text = ""
+        option2TextView.text = ""
+        authorLabel.text = ""
+        centerBarButton.setTitle("", forState: .Normal)
+        tableView.tableFooterView = UIView(frame: CGRectZero)
+        bookmarkTitleLabel.text = "bookmark_title".localizedString
         mainHeightConstraint.constant = UIScreen.mainScreen().bounds.height
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillChangeFrameNotification, object: nil)
         setReadOnly()
+        updateUserState()
+        backButton.setTitle("back_button_title".localizedString, forState: .Normal)
+    }
+    
+    func updateUserState() {
         PFUser.currentUser()?.saveInBackground().continueWithSuccessBlock({ (task: BFTask) -> AnyObject? in
             return PFUser.currentUser()?.fetchInBackground()
         }).continueWithSuccessBlock({ (task: BFTask) -> AnyObject? in
@@ -45,21 +59,30 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
             })
             let bookmarkQuery = Bookmark.query()!
             bookmarkQuery.whereKey("owner", equalTo: user)
+            bookmarkQuery.includeKey("node")
             return bookmarkQuery.findObjectsInBackground()
         }).continueWithBlock({ (task: BFTask) -> AnyObject? in
             if let error = task.error {
                 self.showAlertWithError(error)
             } else if let bookmarks = task.result as? [Bookmark] {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.dataSource = bookmarks
+                    self.dataSource.removeAll()
+                    for bookmark in bookmarks {
+                        if bookmark.node.objectId != nil {
+                            self.dataSource.append(bookmark)
+                        }
+                    }
                     self.tableView.reloadData()
-                    self.updateContentWithNextObjectId(PFConfig.getRootObjectId())
+                    var initNodeObjectId = PFConfig.getRootObjectId()
+                    if let savedInitNodeObjectId = PFUser.currentUser()!.objectForKey("lastVisitedNode") as? String {
+                        initNodeObjectId = savedInitNodeObjectId
+                    }
+                    self.updateContentWithNextObjectId(initNodeObjectId)
                 })
             }
             self.scrollView.setContentOffset(CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentSize.height - self.scrollView.bounds.size.height), animated: true)
             return nil
         })
-        backButton.setTitle("back_button_title".localizedString, forState: .Normal)
     }
     
     func goBack() {
@@ -70,7 +93,9 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
             next2Query.whereKey("next2", equalTo: node)
             let orQuery = PFQuery.orQueryWithSubqueries([next1Query, next2Query])
             orQuery.includeKey("owner")
+            backButton.enabled = false
             orQuery.getFirstObjectInBackgroundWithBlock({ (result: PFObject?, error: NSError?) -> Void in
+                self.backButton.enabled = true
                 if let error = error {
                     self.showAlertWithError(error)
                 } else if let backNode = result as? Node {
@@ -217,6 +242,8 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                 if let error = error {
                     self.showAlertWithError(error)
                 } else if let result = result as? Node {
+                    PFUser.currentUser()!.setObject(result.objectId!, forKey: "lastVisitedNode")
+                    PFUser.currentUser()!.saveInBackground()
                     self.updateContentWithNode(result)
                 }
             }
@@ -284,10 +311,19 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
             bookmark.node = node
             bookmark.owner = PFUser.currentUser()!
             bookmark.story = node.story
+            self.leftBarButton.enabled = false
             bookmark.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
-                self.dataSource.append(bookmark)
-                self.tableView.reloadData()
-                self.leftBarButton.enabled = false
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.scrollView.contentOffset = CGPointMake(0, self.tableView.frame.origin.y + 16)
+                    }, completion: { (finished: Bool) -> Void in
+                        self.delay(0.3) {
+                            self.dataSource.append(bookmark)
+                            self.tableView.reloadData()
+                            self.delay(0.7) {
+                                self.scrollView.setContentOffset(CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentSize.height - self.scrollView.bounds.size.height), animated: true)
+                            }
+                        }
+                })
             })
         }
     }
@@ -322,6 +358,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                     self.updateAccountLabel(user)
                     if let node = self.currentNode {
                         self.updateContentWithNode(node)
+                        self.updateUserState()
                     }
                 })
             })
@@ -386,6 +423,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                     self.createAnonymousUserAndUpdate({ () -> () in
                         if let node = self.currentNode {
                             self.updateContentWithNode(node)
+                            self.updateUserState()
                         }
                     })
                 }
@@ -412,7 +450,6 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                     self.showAlertWithError(error)
                 } else {
                     sender.enabled = false
-                    sender.backgroundColor = UIColor.getColorForAlreadyLiked()
                 }
             })
         }
@@ -421,13 +458,21 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     
     func touchSave(sender: AnyObject) {
         if messageTextView.text != "" && option1TextView.text != "" && option2TextView.text != "" {
+            if currentNode == nil {
+                return
+            }
+            
+            
             let object = Node()
             object.story = messageTextView.text
             object.option1 = option1TextView.text
             object.option2 = option2TextView.text
             object.owner = PFUser.currentUser()!
             object.lang = "lang".localizedString
+            object.depth = currentNode!.depth.integerValue + 1
+            rightBarButto.enabled = false
             object.saveInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in
+                self.rightBarButto.enabled = true
                 if let error = error {
                     self.showAlertWithError(error)
                 } else {
@@ -437,7 +482,9 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                         } else {
                             node.setObject(object, forKey: "next2")
                         }
+                        self.rightBarButto.enabled = false
                         node.saveInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in
+                            self.rightBarButto.enabled = true
                             if let error = error {
                                 self.showAlertWithError(error)
                             } else {
@@ -484,7 +531,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     }
     
     // MARK: - TableViewDataSource
-    
+        
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
@@ -515,10 +562,26 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! BookmarkCell
         let bookmark = dataSource[indexPath.row]
         cell.label.text = bookmark.story
+        let depth = bookmark.node.depth
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        let dateString = formatter.stringFromDate(bookmark.createdAt!)
+        var subTitleString = "bookmark_subtitle".localizedString
+        subTitleString = subTitleString.stringByReplacingString("#depth#", with: "\(depth)")
+        subTitleString = subTitleString.stringByReplacingString("#date#", with: dateString)
+        cell.subTitle.text = subTitleString
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            return 100
+        } else {
+            return 60
+        }
     }
 }
