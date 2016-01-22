@@ -536,7 +536,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     
     @IBAction func touchOption1(sender: AnyObject) {
         option1 = true
-        if currentNode?.next1 == nil {
+        if currentNode?.objectForKey("next1") == nil {
             updateContentWithPreview(currentNode?.story, choise: currentNode?.option1)
         } else {
             updateContentWithNextObjectId(currentNode?.next1.objectId)
@@ -546,7 +546,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
     
     @IBAction func touchOption2(sender: AnyObject) {
         option1 = false
-        if currentNode?.next2 == nil {
+        if currentNode?.objectForKey("next2") == nil {
             updateContentWithPreview(currentNode?.story, choise: currentNode?.option2)
         } else {
             updateContentWithNextObjectId(currentNode?.next2.objectId)

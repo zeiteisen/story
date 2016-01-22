@@ -65,7 +65,7 @@
                                                                     <rect key="frame" x="8" y="4" width="584" height="56"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39F-pt-G2S">
-                                                                            <rect key="frame" x="8" y="8" width="568" height="19.5"/>
+                                                                            <rect key="frame" x="8" y="8" width="568" height="20"/>
                                                                             <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="17"/>
                                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -144,13 +144,13 @@
                                             <constraint firstAttribute="bottom" secondItem="Mau-GF-ooO" secondAttribute="bottom" id="5t8-u6-Rjp"/>
                                             <constraint firstItem="Mau-GF-ooO" firstAttribute="leading" secondItem="fMP-8q-flp" secondAttribute="leading" id="GQQ-eq-DFE"/>
                                             <constraint firstItem="cYb-sy-WqE" firstAttribute="leading" secondItem="fMP-8q-flp" secondAttribute="leading" constant="20" id="LoE-kQ-s4E">
-                                                <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                                                <variation key="heightClass=regular-widthClass=regular" constant="150"/>
                                             </constraint>
                                             <constraint firstItem="Mau-GF-ooO" firstAttribute="top" secondItem="cYb-sy-WqE" secondAttribute="bottom" constant="8" id="P0S-jD-Dnm"/>
                                             <constraint firstAttribute="trailing" secondItem="Mau-GF-ooO" secondAttribute="trailing" id="P7n-L9-Rq2"/>
                                             <constraint firstItem="cYb-sy-WqE" firstAttribute="top" secondItem="fMP-8q-flp" secondAttribute="top" constant="20" id="pN6-49-1mw"/>
                                             <constraint firstAttribute="trailing" secondItem="cYb-sy-WqE" secondAttribute="trailing" constant="20" id="vRc-V8-n9D">
-                                                <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                                                <variation key="heightClass=regular-widthClass=regular" constant="150"/>
                                             </constraint>
                                         </constraints>
                                     </view>
