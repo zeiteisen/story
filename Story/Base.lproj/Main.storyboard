@@ -236,6 +236,7 @@
                                                             <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="20"/>
                                                         </variation>
                                                         <connections>
+                                                            <outlet property="delegate" destination="KQs-oQ-UDA" id="9OS-uN-sT8"/>
                                                             <outletCollection property="gestureRecognizers" destination="QdU-SC-4dw" appends="YES" id="FAl-cI-qbu"/>
                                                         </connections>
                                                     </textView>
@@ -253,6 +254,7 @@
                                                             <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="20"/>
                                                         </variation>
                                                         <connections>
+                                                            <outlet property="delegate" destination="KQs-oQ-UDA" id="ObK-IN-USi"/>
                                                             <outletCollection property="gestureRecognizers" destination="B9G-2r-48O" appends="YES" id="GWC-tX-7BS"/>
                                                         </connections>
                                                     </textView>

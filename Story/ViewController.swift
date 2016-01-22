@@ -11,7 +11,7 @@ import Parse
 import UITextView_Placeholder
 import MBProgressHUD
 
-class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
 
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var mainHeightConstraint: NSLayoutConstraint!
@@ -48,6 +48,12 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
         setReadOnly()
         updateUserState()
         backButton.setTitle("back_button_title".localizedString, forState: .Normal)
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            messageTextView.layoutManager.allowsNonContiguousLayout = false
+            option1TextView.layoutManager.allowsNonContiguousLayout = false
+            option2TextView.layoutManager.allowsNonContiguousLayout = false
+            scrollView.pagingEnabled = false
+        }
     }
     
     func setupHeightConstraints(size: CGSize) {
@@ -193,7 +199,6 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
         option1TextView.editable = true
         option2TextView.editable = true
         authorLabelHeightConstraint.constant = 0
-        messageTextView.becomeFirstResponder()
         rightBarButto.hidden = false
         rightBarButto.enabled = true
         rightBarButto.setBackgroundImage(UIImage(named: "save"), forState: .Normal)
@@ -201,6 +206,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
         rightBarButto.addTarget(self, action: "touchSave:", forControlEvents: .TouchUpInside)
         leftBarButton.enabled = false
         backButton.enabled = true
+        messageTextView.becomeFirstResponder()
     }
     
     func setReadOnly() {
@@ -216,6 +222,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
         rightBarButto.removeTarget(self, action: "touchSave:", forControlEvents: .TouchUpInside)
         rightBarButto.addTarget(self, action: "touchLike:", forControlEvents: .TouchUpInside)
         updateBookmarkButton()
+        view.endEditing(true)
     }
     
     func updateBookmarkButton() {
@@ -511,6 +518,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                             if let error = error {
                                 self.showAlertWithError(error)
                             } else {
+                                self.view.endEditing(true)
                                 self.updateContentWithNode(object)
                             }
                         })
@@ -530,8 +538,6 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                 option2TextView.shake()
             }
         }
-        print("save")
-        view.endEditing(true)
     }
     
     @IBAction func touchOption1(sender: AnyObject) {
@@ -608,5 +614,11 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
         } else {
             return 60
         }
+    }
+    
+    // MARK: - ScrollViewDelegate
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
     }
 }
