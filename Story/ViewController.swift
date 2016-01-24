@@ -52,7 +52,6 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
             messageTextView.layoutManager.allowsNonContiguousLayout = false
             option1TextView.layoutManager.allowsNonContiguousLayout = false
             option2TextView.layoutManager.allowsNonContiguousLayout = false
-            scrollView.pagingEnabled = false
         }
     }
     
@@ -97,13 +96,17 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                     self.updateContentWithNextObjectId(initNodeObjectId)
                 })
             }
-            self.scrollView.setContentOffset(CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentSize.height - self.scrollView.bounds.size.height), animated: true)
+            self.scrollToBottom()
             return nil
         })
     }
     
     func goBack() {
         if let node = currentNode {
+            if node.objectId == PFConfig.getRootObjectId() {
+                return
+            }
+            
             let next1Query = PFQuery(className: "Node")
             next1Query.whereKey("next1", equalTo: node)
             let next2Query = PFQuery(className: "Node")
@@ -111,7 +114,9 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
             let orQuery = PFQuery.orQueryWithSubqueries([next1Query, next2Query])
             orQuery.includeKey("owner")
             backButton.enabled = false
+            MBProgressHUD.showHUDAddedTo(view, animated: true)
             orQuery.getFirstObjectInBackgroundWithBlock({ (result: PFObject?, error: NSError?) -> Void in
+                MBProgressHUD.hideHUDForView(self.view, animated: true)
                 self.backButton.enabled = true
                 if let error = error {
                     self.showAlertWithError(error)
@@ -120,6 +125,10 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
                 }
             })
         }
+    }
+    
+    func scrollToBottom() {
+        self.scrollView.setContentOffset(CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentSize.height - self.scrollView.bounds.size.height), animated: true)
     }
     
     func alreadyBookmarked(node: Node) -> Bool {
@@ -321,13 +330,25 @@ class ViewController: UIViewController, UITextViewDelegate, UITableViewDelegate,
         })
     }
     
-    // MARK: - Actions
-    @IBAction func touchBack(sender: AnyObject) {
+    func backAction() {
+        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+            self.scrollToBottom()
+        }
         if messageTextView.editable {
             updateContentWithNode(currentNode!)
         } else {
             goBack()
         }
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction func swipeBack(sender: AnyObject) {
+        backAction()
+    }
+    
+    @IBAction func touchBack(sender: AnyObject) {
+        backAction()
     }
     
     @IBAction func touchLeftBarButton(sender: AnyObject) {

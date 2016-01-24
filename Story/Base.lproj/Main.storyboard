@@ -21,7 +21,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="ylO-GI-yVZ">
                                 <rect key="frame" x="0.0" y="20" width="600" height="780"/>
                             </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oax-BC-kSI">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oax-BC-kSI">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fMP-8q-flp">
@@ -303,10 +303,10 @@
                                                         <rect key="frame" x="28" y="8" width="544" height="263"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                                        <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="14"/>
+                                                        <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         <variation key="heightClass=regular-widthClass=regular">
-                                                            <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="20"/>
+                                                            <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="22"/>
                                                         </variation>
                                                         <connections>
                                                             <outlet property="delegate" destination="KQs-oQ-UDA" id="TLf-UE-axg"/>
@@ -351,6 +351,7 @@
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="Wuu-q0-iCU" secondAttribute="trailing" id="1Dq-BG-SkU"/>
                                             <constraint firstItem="52S-a6-Lyn" firstAttribute="leading" secondItem="lyM-W8-GgM" secondAttribute="leading" id="5Em-3X-PEt"/>
@@ -364,6 +365,9 @@
                                             <constraint firstAttribute="height" constant="492" id="wCV-b7-mh1"/>
                                             <constraint firstAttribute="trailing" secondItem="52S-a6-Lyn" secondAttribute="trailing" id="ynw-kP-QTU"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="LGe-id-hMr" appends="YES" id="SJW-Ph-xwi"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -423,6 +427,11 @@
                         <action selector="touchOption2:" destination="KQs-oQ-UDA" id="L2x-yl-KnK"/>
                     </connections>
                 </tapGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="LGe-id-hMr">
+                    <connections>
+                        <action selector="swipeBack:" destination="KQs-oQ-UDA" id="BYt-TQ-zGJ"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="75" y="360.75"/>
         </scene>
